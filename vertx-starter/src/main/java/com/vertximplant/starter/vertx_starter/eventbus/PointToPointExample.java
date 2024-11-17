@@ -8,5 +8,4 @@ public class PointToPointExample {
     vertx.deployVerticle(new Sender());
     vertx.deployVerticle(new Reciever());
   }
-
 }

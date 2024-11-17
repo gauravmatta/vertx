@@ -2,7 +2,6 @@ package com.vertximplant.starter.vertx_starter.worker;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
-import io.vertx.core.Vertx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
