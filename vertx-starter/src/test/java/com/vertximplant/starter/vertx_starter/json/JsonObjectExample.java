@@ -1,5 +1,7 @@
 package com.vertximplant.starter.vertx_starter.json;
 
+import com.vertximplant.starter.vertx_starter.entity.Person;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.junit.jupiter.api.Test;
 
@@ -33,5 +35,29 @@ public class JsonObjectExample {
     assertEquals(1, asJsonObject.getInteger("id"));
     assertEquals("Gaurav",asJsonObject.getString("name"));
     assertEquals(true,asJsonObject.getBoolean("loves_vertx"));
+  }
+
+  @Test
+  void jsonArrayCanBeMapped() {
+  final JsonArray myJsonArray =  new JsonArray();
+  myJsonArray
+    .add(new JsonObject().put("id",1))
+    .add(new JsonObject().put("id",2))
+    .add(new JsonObject().put("id",3))
+    .add("randomvalue");
+  assertEquals("[{\"id\":1},{\"id\":2},{\"id\":3},\"randomvalue\"]",myJsonArray.encode());
+  }
+
+  @Test
+  void canMapJavaObjects(){
+    final Person person = new Person(1,"Gaurav",true);
+    final JsonObject gaurav = JsonObject.mapFrom(person);
+    assertEquals(person.getId(),gaurav.getInteger("id"));
+    assertEquals(person.getName(),gaurav.getString("name"));
+    assertEquals(person.isLovesVertx(),gaurav.getBoolean("lovesVertx"));
+    Person person1 = gaurav.mapTo(Person.class);
+    assertEquals(person.getName(),person1.getName());
+    assertEquals(person.getId(),person1.getId());
+    assertEquals(person.isLovesVertx(),person1.isLovesVertx());
   }
 }

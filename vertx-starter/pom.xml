@@ -18,7 +18,7 @@
 
     <vertx.version>4.5.10</vertx.version>
     <junit-jupiter.version>5.9.1</junit-jupiter.version>
-
+    <jacksonVersion>2.16.1</jacksonVersion>
     <main.verticle>com.vertximplant.starter.vertx_starter.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
   </properties>
@@ -89,6 +89,11 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jacksonVersion}</version>
     </dependency>
   </dependencies>
 
