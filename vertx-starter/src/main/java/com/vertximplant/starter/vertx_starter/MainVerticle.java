@@ -3,8 +3,14 @@ package com.vertximplant.starter.vertx_starter;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Random;
 
 public class MainVerticle extends AbstractVerticle {
+
+  private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
 
   public static void main(String[] args) {
   Vertx vertx =  Vertx.vertx();
@@ -24,6 +30,10 @@ public class MainVerticle extends AbstractVerticle {
       } else {
         startPromise.fail(http.cause());
       }
+    });
+    vertx.setPeriodic(500,id ->{
+      LOG.debug("Redeploy...");
+      LOG.debug(String.valueOf(new Random().nextDouble()));
     });
   }
 }
