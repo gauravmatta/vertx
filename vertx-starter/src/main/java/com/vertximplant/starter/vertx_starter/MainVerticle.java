@@ -31,7 +31,7 @@ public class MainVerticle extends AbstractVerticle {
         startPromise.fail(http.cause());
       }
     });
-    vertx.setPeriodic(500,id ->{
+    vertx.setPeriodic(10000,id ->{
       LOG.debug("Redeploy...");
       LOG.debug(String.valueOf(new Random().nextDouble()));
     });
