@@ -17,8 +17,9 @@ public class ResponseJsonVerticle extends AbstractVerticle {
   public void start(Promise<Void> startPromise) throws Exception {
     startPromise.complete();
     vertx.eventBus().<JsonObject>consumer(MY_REQUEST_ADDRESS, message -> {
-      LOG.debug("Recieved Message: {}",message.body());
-      message.reply(new JsonArray().add("one").add("two").add("three"),new DeliveryOptions().setSendTimeout(30000));
+      LOG.debug("Recieved Message: {}", message.body());
+      message.reply(new JsonArray().add("one").add("two").add("three"),
+          new DeliveryOptions().setSendTimeout(30000));
     });
   }
 }

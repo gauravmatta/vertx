@@ -15,11 +15,11 @@ public class PongVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     EventBus eventBus = vertx.eventBus();
-    eventBus.registerDefaultCodec(Pong.class,new LocalMessageCodec<>(Pong.class));
-    vertx.eventBus().<Ping>consumer(MY_REQUEST_ADDRESS,message -> {
-      LOG.debug("Recieved Message: {}",message.body());
-      message.reply(new Pong(0),new DeliveryOptions().setSendTimeout(30000));
-    }).exceptionHandler(error -> LOG.error("Error: ",error));
+    eventBus.registerDefaultCodec(Pong.class, new LocalMessageCodec<>(Pong.class));
+    vertx.eventBus().<Ping>consumer(MY_REQUEST_ADDRESS, message -> {
+      LOG.debug("Recieved Message: {}", message.body());
+      message.reply(new Pong(0), new DeliveryOptions().setSendTimeout(30000));
+    }).exceptionHandler(error -> LOG.error("Error: ", error));
     startPromise.complete();
   }
 }

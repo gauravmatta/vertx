@@ -11,6 +11,7 @@ public class Subscriber extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
-    vertx.eventBus().<String>consumer(Publish.class.getName(),message -> LOG.debug("Received by Subscriber : {}", message.body()));
+    vertx.eventBus().<String>consumer(Publish.class.getName(),
+        message -> LOG.debug("Received by Subscriber : {}", message.body()));
   }
 }

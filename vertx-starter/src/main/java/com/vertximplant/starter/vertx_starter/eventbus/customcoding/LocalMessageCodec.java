@@ -3,11 +3,11 @@ package com.vertximplant.starter.vertx_starter.eventbus.customcoding;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;
 
-public class LocalMessageCodec<T> implements MessageCodec<T,T> {
+public class LocalMessageCodec<T> implements MessageCodec<T, T> {
 
   private String typeName;
 
-  public LocalMessageCodec(Class<T> type){
+  public LocalMessageCodec(Class<T> type) {
     this.typeName = type.getName();
   }
 

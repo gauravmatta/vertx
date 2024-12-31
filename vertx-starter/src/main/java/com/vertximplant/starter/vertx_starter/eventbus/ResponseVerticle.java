@@ -14,9 +14,9 @@ public class ResponseVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     startPromise.complete();
-    vertx.eventBus().<String>consumer(MY_REQUEST_ADDRESS,message -> {
-      LOG.debug("Recieved Message: {}",message.body());
-      message.reply("Recieved Your message. Thanks!",new DeliveryOptions().setSendTimeout(30000));
+    vertx.eventBus().<String>consumer(MY_REQUEST_ADDRESS, message -> {
+      LOG.debug("Recieved Message: {}", message.body());
+      message.reply("Recieved Your message. Thanks!", new DeliveryOptions().setSendTimeout(30000));
     });
   }
 }

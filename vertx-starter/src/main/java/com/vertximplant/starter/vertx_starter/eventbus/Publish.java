@@ -4,7 +4,6 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.time.Duration;
 
 public class Publish extends AbstractVerticle {
@@ -15,6 +14,7 @@ public class Publish extends AbstractVerticle {
   public void start(Promise<Void> startPromise) throws Exception {
     startPromise.complete();
     LOG.debug("Publishing Message");
-    vertx.setPeriodic(Duration.ofSeconds(10).toMillis(),id -> vertx.eventBus().publish(Publish.class.getName(),"A message for everyone"));
+    vertx.setPeriodic(Duration.ofSeconds(10).toMillis(),
+        id -> vertx.eventBus().publish(Publish.class.getName(), "A message for everyone"));
   }
 }

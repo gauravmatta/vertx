@@ -2,11 +2,13 @@ package com.vertximplant.starter.vertx_starter.eventbus.customcoding;
 
 public class Pong {
   private Integer id;
-  public Pong(){
+
+  public Pong() {
 
   }
-  public Pong(final Integer id){
-    this.id=id;
+
+  public Pong(final Integer id) {
+    this.id = id;
   }
 
   public Integer getId() {
@@ -15,8 +17,6 @@ public class Pong {
 
   @Override
   public String toString() {
-    return "Pong{" +
-      "id=" + id +
-      '}';
+    return "Pong{" + "id=" + id + '}';
   }
 }

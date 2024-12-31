@@ -14,15 +14,15 @@ public class PingVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     EventBus eventBus = vertx.eventBus();
-    eventBus.registerDefaultCodec(Ping.class,new LocalMessageCodec<>(Ping.class));
-    final Ping message = new Ping("Hello",true);
-    LOG.debug("Sending: {}",message);
-    eventBus.<Pong>request(MY_REQUEST_ADDRESS, message, reply ->{
-      if(reply.failed()){
-        LOG.error("Failed: ",reply.cause());
+    eventBus.registerDefaultCodec(Ping.class, new LocalMessageCodec<>(Ping.class));
+    final Ping message = new Ping("Hello", true);
+    LOG.debug("Sending: {}", message);
+    eventBus.<Pong>request(MY_REQUEST_ADDRESS, message, reply -> {
+      if (reply.failed()) {
+        LOG.error("Failed: ", reply.cause());
         return;
       }
-      LOG.debug("Response: {}",reply.result().body());
+      LOG.debug("Response: {}", reply.result().body());
     });
     startPromise.complete();
   }

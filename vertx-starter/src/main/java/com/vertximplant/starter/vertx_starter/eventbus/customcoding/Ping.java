@@ -4,8 +4,7 @@ public class Ping {
   private String message;
   private boolean enabled;
 
-  public Ping() {
-  }
+  public Ping() {}
 
   public Ping(String message, boolean enabled) {
     this.message = message;
@@ -30,9 +29,6 @@ public class Ping {
 
   @Override
   public String toString() {
-    return "Ping{"+
-      "message='"+ message +'\'' +
-      ", enabled="+ enabled +
-      "}";
+    return "Ping{" + "message='" + message + '\'' + ", enabled=" + enabled + "}";
   }
 }

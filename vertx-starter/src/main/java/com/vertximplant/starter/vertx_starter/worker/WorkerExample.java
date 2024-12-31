@@ -18,12 +18,8 @@ public class WorkerExample extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
-    vertx.deployVerticle(new WorkerVerticle(),
-      new DeploymentOptions()
-        .setWorker(true)
-        .setWorkerPoolSize(1)
-        .setWorkerPoolName("my-worker-verticle")
-    );
+    vertx.deployVerticle(new WorkerVerticle(), new DeploymentOptions().setWorker(true)
+        .setWorkerPoolSize(1).setWorkerPoolName("my-worker-verticle"));
     startPromise.complete();
     vertx.executeBlocking(event -> {
       LOG.debug("Executing blocking code");
@@ -31,15 +27,14 @@ public class WorkerExample extends AbstractVerticle {
         Thread.sleep(5000);
         event.complete();
       } catch (InterruptedException e) {
-        LOG.error("Failed: ",e);
+        LOG.error("Failed: ", e);
         event.fail(e);
       }
-    },
-    result ->{
-      if(result.succeeded()){
+    }, result -> {
+      if (result.succeeded()) {
         LOG.debug("Blocking call done");
       } else {
-        LOG.debug("Blocking call failed due to :",result.cause());
+        LOG.debug("Blocking call failed due to :", result.cause());
       }
     });
   }

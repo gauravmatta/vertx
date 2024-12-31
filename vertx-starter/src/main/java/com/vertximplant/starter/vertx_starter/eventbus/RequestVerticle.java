@@ -16,9 +16,9 @@ public class RequestVerticle extends AbstractVerticle {
     startPromise.complete();
     EventBus eventBus = vertx.eventBus();
     String message = "Hello World";
-    LOG.debug("Sending: {}",message);
-    eventBus.<String>request(MY_REQUEST_ADDRESS, message, reply ->{
-      LOG.debug("Response: {}",reply.result().body());
+    LOG.debug("Sending: {}", message);
+    eventBus.<String>request(MY_REQUEST_ADDRESS, message, reply -> {
+      LOG.debug("Response: {}", reply.result().body());
     });
   }
 }

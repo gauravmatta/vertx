@@ -12,6 +12,7 @@ public class Reciever extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     startPromise.complete();
-    vertx.eventBus().<String>consumer(Sender.class.getName(),message-> LOG.debug("Recieved: {}",message.body()));
+    vertx.eventBus().<String>consumer(Sender.class.getName(),
+        message -> LOG.debug("Recieved: {}", message.body()));
   }
 }
