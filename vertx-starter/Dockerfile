@@ -3,10 +3,10 @@
 # - docker run -t -i -p 8888:8888 example/vertx-starter
 
 # https://hub.docker.com/_/adoptopenjdk
-FROM adoptopenjdk:11-jre-hotspot
+# FROM adoptopenjdk:11-jre-hotspot
 
 # Alternative https://hub.docker.com/_/amazoncorretto
-# FROM amazoncorretto:11
+FROM amazoncorretto:11
 
 ENV FAT_JAR=vertx-starter-1.0.0-SNAPSHOT-fat.jar
 ENV APP_HOME=/usr/app

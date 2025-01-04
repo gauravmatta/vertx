@@ -49,7 +49,6 @@
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
     </dependency>
-
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-junit5</artifactId>
@@ -180,6 +179,29 @@
             <argument>run</argument>
             <argument>${main.verticle}</argument>
           </arguments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>3.4.4</version>
+        <configuration>
+          <from>
+            <image>amazoncorretto:11</image>
+          </from>
+          <to>
+            <image>example/jib/vertx-starter</image>
+          </to>
+          <container>
+            <mainClass>io.vertx.core.Launcher</mainClass>
+            <args>
+              <arg>run</arg>
+              <arg>${main.verticle}</arg>
+            </args>
+            <ports>
+              <port>8888</port>
+            </ports>
+          </container>
         </configuration>
       </plugin>
     </plugins>
