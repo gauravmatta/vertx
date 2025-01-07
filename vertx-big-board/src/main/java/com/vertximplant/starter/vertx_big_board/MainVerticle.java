@@ -12,24 +12,22 @@ public class MainVerticle extends AbstractVerticle {
 
   public static void main(String[] args) {
     Vertx vertx = Vertx.vertx();
-    vertx.exceptionHandler(error ->{
-      LOG.error("Unhandled:",error);
+    vertx.exceptionHandler(error -> {
+      LOG.error("Unhandled:", error);
     });
-    vertx.deployVerticle(new MainVerticle(),ar ->{
-      if(ar.failed()) {
-        LOG.error("Failed to deploy:",ar.cause());
+    vertx.deployVerticle(new MainVerticle(), ar -> {
+      if (ar.failed()) {
+        LOG.error("Failed to deploy:", ar.cause());
         return;
       }
-      LOG.info("Deployed:{}!",MainVerticle.class.getName());
+      LOG.info("Deployed:{}!", MainVerticle.class.getName());
     });
   }
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     vertx.createHttpServer().requestHandler(req -> {
-      req.response()
-        .putHeader("content-type", "text/plain")
-        .end("Hello from Vert.x!");
+      req.response().putHeader("content-type", "text/plain").end("Hello from Vert.x!");
     }).listen(8888).onComplete(http -> {
       if (http.succeeded()) {
         startPromise.complete();
