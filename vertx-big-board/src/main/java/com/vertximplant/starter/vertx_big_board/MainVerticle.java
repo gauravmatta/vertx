@@ -49,19 +49,19 @@ public class MainVerticle extends AbstractVerticle {
   private void bootStrapHttpServer(Promise<Void> startPromise) {
     HttpServer httpServer = createHttpServer(startPromise);
     initHttpRequestHandler(httpServer);
-    httpServer.listen(8888,httpServerAsyncResult -> {
-        setVerticleStartStatus(startPromise,httpServerAsyncResult);
-      });
+    httpServer.listen(8888, httpServerAsyncResult -> {
+      setVerticleStartStatus(startPromise, httpServerAsyncResult);
+    });
   }
 
   private HttpServer createHttpServer(Promise<Void> startPromise) {
     HttpServerOptions httpServerOptions = new HttpServerOptions();
     httpServerOptions.setSsl(false).setIdleTimeout(10).setIdleTimeoutUnit(TimeUnit.MINUTES);
-  return vertx.createHttpServer(httpServerOptions);
+    return vertx.createHttpServer(httpServerOptions);
   }
 
   private void setVerticleStartStatus(Promise<Void> startPromise, AsyncResult<HttpServer> httpServerAsyncResult) {
-    if(httpServerAsyncResult.succeeded()){
+    if (httpServerAsyncResult.succeeded()) {
       startPromise.complete();
       LOG.info("HTTP server started on port 8888");
     } else {
