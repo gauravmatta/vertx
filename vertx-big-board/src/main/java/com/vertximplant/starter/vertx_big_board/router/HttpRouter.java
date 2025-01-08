@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vertximplant.starter.vertx_big_board.constants.HttpConstants;
 import com.vertximplant.starter.vertx_big_board.handler.AssetsHandler;
+import com.vertximplant.starter.vertx_big_board.handler.HealthHandler;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.Json;
@@ -25,6 +26,8 @@ public class HttpRouter {
   private static final Logger LOG = LoggerFactory.getLogger(HttpRouter.class);
   @Inject
   AssetsHandler assetsHandler;
+  @Inject
+  HealthHandler healthHandler;
   private Router router;
 
   public Router init(Vertx vertx) {
@@ -42,15 +45,8 @@ public class HttpRouter {
   }
 
   private void healthRouter() {
-    router.route(HEALTH_ROUTE).handler(this::health);
-    router.get(HEALTH_ROUTE).handler(this::health);
-  }
-
-  private void health(RoutingContext routingContext) {
-    routingContext.response().setStatusCode(HttpConstants.HTTP_STATUS_200)
-      .putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,
-        HttpConstants.HTTP_HEADER_CONTENT_VALUE + "; charset=utf-8")
-      .end(Json.encodePrettily("Health OK"));
+    router.route(HEALTH_ROUTE).handler(healthHandler::handle);
+    router.get(HEALTH_ROUTE).handler(healthHandler::handle);
   }
 
   private void rootRouter() {
