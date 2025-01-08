@@ -1,12 +1,12 @@
 package com.vertximplant.starter.vertx_big_board.router;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vertximplant.starter.vertx_big_board.constants.HttpConstants;
+import com.vertximplant.starter.vertx_big_board.handler.AssetsHandler;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.Json;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -25,18 +25,21 @@ public class HttpRouter {
   private Router router;
   private static final Logger LOG = LoggerFactory.getLogger(HttpRouter.class);
 
+  @Inject
+  AssetsHandler assetsHandler;
+
 
   public Router init(Vertx vertx) {
     this.router = Router.router(vertx);
-//    router.route().handler(getCorsHandler());
-//    router.route().handler(routingContext -> {
-//      routingContext.response().putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,
-//          HttpConstants.HTTP_HEADER_CONTENT_VALUE + "; charset=utf-8");
-//      routingContext.next();
-//    });
+    router.route().handler(getCorsHandler());
+    router.route().handler(routingContext -> {
+      routingContext.response().putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,
+          HttpConstants.HTTP_HEADER_CONTENT_VALUE + "; charset=utf-8");
+      routingContext.next();
+    });
     this.assetsRouter();
-//    this.healthRouter();
-//    this.rootRouter();
+    this.healthRouter();
+    this.rootRouter();
     return router;
   }
 
@@ -61,16 +64,8 @@ public class HttpRouter {
   }
 
   private void assetsRouter(){
-    router.get("/assets").handler(routingContext -> {
-      final JsonArray response = new JsonArray();
-      response
-        .add(new JsonObject().put("symbol","AAPL"))
-        .add(new JsonObject().put("symbol","AMZN"))
-        .add(new JsonObject().put("symbol","NFLX"))
-        .add(new JsonObject().put("symbol","TSLA"));
-      LOG.info("Path {} responds with {}",routingContext.normalizedPath(),response.encode());
-      routingContext.response().end(response.toBuffer());
-    });
+    router.route("/assets*").handler(BodyHandler.create()).failureHandler(this::handleFailure);
+    router.get("/assets").handler(assetsHandler::handle);
   }
 
   private CorsHandler getCorsHandler() {
