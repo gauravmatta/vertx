@@ -22,12 +22,10 @@ import static org.apache.hc.core5.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 @Singleton
 public class HttpRouter {
 
-  private Router router;
   private static final Logger LOG = LoggerFactory.getLogger(HttpRouter.class);
-
   @Inject
   AssetsHandler assetsHandler;
-
+  private Router router;
 
   public Router init(Vertx vertx) {
     this.router = Router.router(vertx);
