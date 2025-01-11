@@ -14,8 +14,8 @@ public class HealthHandler {
 
   public void handle(RoutingContext routingContext) {
     routingContext.response().setStatusCode(HttpConstants.HTTP_STATUS_200)
-      .putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,
-        HttpConstants.HTTP_HEADER_CONTENT_VALUE + "; charset=utf-8")
-      .end(Json.encodePrettily("Health OK"));
+        .putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,
+            HttpConstants.HTTP_HEADER_CONTENT_VALUE + "; charset=utf-8")
+        .end(Json.encodePrettily("Health OK"));
   }
 }

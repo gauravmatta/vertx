@@ -14,11 +14,8 @@ public class AssetsHandler {
 
   public void handle(RoutingContext routingContext) {
     final JsonArray response = new JsonArray();
-    response
-      .add(new JsonObject().put("symbol", "AAPL"))
-      .add(new JsonObject().put("symbol", "AMZN"))
-      .add(new JsonObject().put("symbol", "NFLX"))
-      .add(new JsonObject().put("symbol", "TSLA"));
+    response.add(new JsonObject().put("symbol", "AAPL")).add(new JsonObject().put("symbol", "AMZN"))
+        .add(new JsonObject().put("symbol", "NFLX")).add(new JsonObject().put("symbol", "TSLA"));
     LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
     routingContext.response().end(response.toBuffer());
   }

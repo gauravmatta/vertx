@@ -12,7 +12,6 @@ import io.vertx.ext.web.Router;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.TimeUnit;
 
 public class MainVerticle extends AbstractVerticle {
@@ -60,7 +59,8 @@ public class MainVerticle extends AbstractVerticle {
     return vertx.createHttpServer(httpServerOptions);
   }
 
-  private void setVerticleStartStatus(Promise<Void> startPromise, AsyncResult<HttpServer> httpServerAsyncResult) {
+  private void setVerticleStartStatus(Promise<Void> startPromise,
+      AsyncResult<HttpServer> httpServerAsyncResult) {
     if (httpServerAsyncResult.succeeded()) {
       startPromise.complete();
       LOG.info("HTTP server started on port 8888");
@@ -72,6 +72,6 @@ public class MainVerticle extends AbstractVerticle {
   private void initHttpRequestHandler(HttpServer httpServer) {
     Router router = this.httpRouter.init(vertx);
     httpServer.requestHandler(router)
-      .exceptionHandler(error -> LOG.error("HTTP Server error: ", error));
+        .exceptionHandler(error -> LOG.error("HTTP Server error: ", error));
   }
 }
