@@ -61,7 +61,7 @@ public class HttpRouter {
   }
 
   private void assetsRouter() {
-    router.route("/assets*").handler(BodyHandler.create()).failureHandler(this::handleFailure);
+    router.route("/assets").handler(BodyHandler.create()).failureHandler(this::handleFailure);
     router.get("/assets").handler(assetsHandler::handle);
   }
 
