@@ -9,7 +9,7 @@ public class AssetsRestAPI {
   @Inject
   private AssetsHandler assetsHandler;
 
-  public void attach(Router router){
+  public void attach(Router router) {
     router.get("/assets_api").handler(assetsHandler::handle);
   }
 }
