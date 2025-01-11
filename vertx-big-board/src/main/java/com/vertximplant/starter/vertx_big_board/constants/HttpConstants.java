@@ -10,4 +10,5 @@ public class HttpConstants {
   public static final String HEALTH_ROUTE = "/health";
   public static final String HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET =
       "application/json;charset=utf-8";
+  public static final int PORT = 8888;
 }

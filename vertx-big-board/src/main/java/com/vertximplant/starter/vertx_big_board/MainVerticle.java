@@ -14,9 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.TimeUnit;
 
+import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.PORT;
+
 public class MainVerticle extends AbstractVerticle {
 
   private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
+
 
   @Inject
   private HttpRouter httpRouter;
@@ -48,7 +51,7 @@ public class MainVerticle extends AbstractVerticle {
   private void bootStrapHttpServer(Promise<Void> startPromise) {
     HttpServer httpServer = createHttpServer(startPromise);
     initHttpRequestHandler(httpServer);
-    httpServer.listen(8888, httpServerAsyncResult -> {
+    httpServer.listen(PORT, httpServerAsyncResult -> {
       setVerticleStartStatus(startPromise, httpServerAsyncResult);
     });
   }
