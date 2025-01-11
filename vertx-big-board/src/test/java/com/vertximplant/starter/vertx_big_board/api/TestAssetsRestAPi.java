@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.PORT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,13 +29,14 @@ public class TestAssetsRestAPi {
   @Test
   void returns_all_assets(Vertx vertx, VertxTestContext testContext) throws Throwable {
     WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
-    client.get("/assets").send().onComplete(
-      testContext.succeeding(bufferHttpResponse -> {
-        JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
-        LOG.info("Response: {}",objects);
-        assertEquals("[{\"symbol\":\"ICICIB22\"},{\"symbol\":\"CARRARO\"},{\"symbol\":\"COALINDIA\"},{\"symbol\":\"CPSEETF\"},{\"symbol\":\"EXIDEIND\"}]",objects.encode());
-        assertEquals(200,bufferHttpResponse.statusCode());
-        testContext.completeNow();
-      }));
+    client.get("/assets").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
+      JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
+      LOG.info("Response: {}", objects);
+      assertEquals(
+          "[{\"symbol\":\"ICICIB22\"},{\"symbol\":\"CARRARO\"},{\"symbol\":\"COALINDIA\"},{\"symbol\":\"CPSEETF\"},{\"symbol\":\"EXIDEIND\"}]",
+          objects.encode());
+      assertEquals(200, bufferHttpResponse.statusCode());
+      testContext.completeNow();
+    }));
   }
 }
