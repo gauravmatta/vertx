@@ -3,6 +3,7 @@ package com.vertximplant.starter.vertx_big_board.router;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.vertximplant.starter.vertx_big_board.api.AssetsRestAPI;
+import com.vertximplant.starter.vertx_big_board.api.QuotesRestAPI;
 import com.vertximplant.starter.vertx_big_board.constants.HttpConstants;
 import com.vertximplant.starter.vertx_big_board.handler.AssetsHandler;
 import com.vertximplant.starter.vertx_big_board.handler.HealthHandler;
@@ -29,6 +30,8 @@ public class HttpRouter {
   HealthHandler healthHandler;
   @Inject
   AssetsRestAPI assetsRestAPI;
+  @Inject
+  QuotesRestAPI quotesRestAPI;
 
   private Router router;
 
@@ -44,6 +47,7 @@ public class HttpRouter {
     this.healthRouter();
     this.rootRouter();
     assetsRestAPI.attach(router);
+    quotesRestAPI.attach(router);
     return router;
   }
 
