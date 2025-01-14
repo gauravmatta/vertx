@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.PORT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,14 +30,10 @@ public class TestQuotesRestAPi {
   @Test
   void returns_quote_for_asset(Vertx vertx, VertxTestContext testContext) throws Throwable {
     WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
-    client.get("/quotes/COALINDIA")
-      .send()
-      .onComplete(testContext.succeeding(bufferHttpResponse -> {
+    client.get("/quotes/COALINDIA").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonObject json = bufferHttpResponse.bodyAsJsonObject();
       LOG.info("Response: {}", json);
-      assertEquals(
-          "{\"name\":\"COALINDIA\"}",
-          json.getJsonObject("asset").encode());
+      assertEquals("{\"name\":\"COALINDIA\"}", json.getJsonObject("asset").encode());
       assertEquals(200, bufferHttpResponse.statusCode());
       testContext.completeNow();
     }));
