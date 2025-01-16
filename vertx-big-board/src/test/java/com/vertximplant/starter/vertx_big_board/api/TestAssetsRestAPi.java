@@ -39,4 +39,18 @@ public class TestAssetsRestAPi {
       testContext.completeNow();
     }));
   }
+
+  @Test
+  void returns_all_assetsApi(Vertx vertx, VertxTestContext testContext) throws Throwable {
+    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    client.get("/assets_api").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
+      JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
+      LOG.info("Response: {}", objects);
+      assertEquals(
+        "[{\"name\":\"AADHARHFC\"},{\"name\":\"ACC\"},{\"name\":\"AFCONS\"},{\"name\":\"ARE&M\"},{\"name\":\"ASIANPAINT\"},{\"name\":\"BAJAJ-AUTO\"},{\"name\":\"BANKINDIA\"},{\"name\":\"BEL\"},{\"name\":\"BPCL\"}]",
+        objects.encode());
+      assertEquals(200, bufferHttpResponse.statusCode());
+      testContext.completeNow();
+    }));
+  }
 }

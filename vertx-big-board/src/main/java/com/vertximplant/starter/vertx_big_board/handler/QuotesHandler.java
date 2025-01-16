@@ -7,15 +7,24 @@ import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class QuotesHandler {
   Logger LOG = LoggerFactory.getLogger(QuotesHandler.class);
+  public static final List<String> ASSETS = Arrays.asList("AADHARHFC","ACC","AFCONS","ARE&M","ASIANPAINT","BAJAJ-AUTO","BANKINDIA","BEL","BPCL");
+  final Map<String,Quote> cachedQuotes = new HashMap<>();
 
   public void handle(RoutingContext routingContext) {
-    String asset = routingContext.pathParam("asset");
-    LOG.debug("Asset parameter: {}", asset);
-    Quote quote = initRandomQuote(asset);
+    ASSETS.forEach(symbol ->{
+      cachedQuotes.put(symbol,initRandomQuote(symbol));
+    });
+    String assetParam = routingContext.pathParam("asset");
+    LOG.debug("Asset parameter: {}", assetParam);
+    Quote quote = cachedQuotes.get(assetParam);
     final JsonObject response = quote.toJsonObject();
     LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
     routingContext.response().end(response.toBuffer());

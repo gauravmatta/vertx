@@ -30,10 +30,10 @@ public class TestQuotesRestAPi {
   @Test
   void returns_quote_for_asset(Vertx vertx, VertxTestContext testContext) throws Throwable {
     WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
-    client.get("/quotes/COALINDIA").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
+    client.get("/quotes/BANKINDIA").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonObject json = bufferHttpResponse.bodyAsJsonObject();
       LOG.info("Response: {}", json);
-      assertEquals("{\"name\":\"COALINDIA\"}", json.getJsonObject("asset").encode());
+      assertEquals("{\"name\":\"BANKINDIA\"}", json.getJsonObject("asset").encode());
       assertEquals(200, bufferHttpResponse.statusCode());
       testContext.completeNow();
     }));
