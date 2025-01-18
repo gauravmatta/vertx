@@ -5,13 +5,13 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class CustomAssetHandler {
   private static final Logger LOG = LoggerFactory.getLogger(CustomAssetHandler.class);
-  public static final List<String> ASSETS = Arrays.asList("AADHARHFC","ACC","AFCONS","ARE&M","ASIANPAINT","BAJAJ-AUTO","BANKINDIA","BEL","BPCL");
+  public static final List<String> ASSETS = Arrays.asList("AADHARHFC", "ACC", "AFCONS", "ARE&M",
+      "ASIANPAINT", "BAJAJ-AUTO", "BANKINDIA", "BEL", "BPCL");
 
   public void handle(RoutingContext routingContext) {
     final JsonArray response = new JsonArray();

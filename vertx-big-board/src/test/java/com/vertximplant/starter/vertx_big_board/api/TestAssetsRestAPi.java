@@ -47,8 +47,8 @@ public class TestAssetsRestAPi {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
       assertEquals(
-        "[{\"name\":\"AADHARHFC\"},{\"name\":\"ACC\"},{\"name\":\"AFCONS\"},{\"name\":\"ARE&M\"},{\"name\":\"ASIANPAINT\"},{\"name\":\"BAJAJ-AUTO\"},{\"name\":\"BANKINDIA\"},{\"name\":\"BEL\"},{\"name\":\"BPCL\"}]",
-        objects.encode());
+          "[{\"name\":\"AADHARHFC\"},{\"name\":\"ACC\"},{\"name\":\"AFCONS\"},{\"name\":\"ARE&M\"},{\"name\":\"ASIANPAINT\"},{\"name\":\"BAJAJ-AUTO\"},{\"name\":\"BANKINDIA\"},{\"name\":\"BEL\"},{\"name\":\"BPCL\"}]",
+          objects.encode());
       assertEquals(200, bufferHttpResponse.statusCode());
       testContext.completeNow();
     }));

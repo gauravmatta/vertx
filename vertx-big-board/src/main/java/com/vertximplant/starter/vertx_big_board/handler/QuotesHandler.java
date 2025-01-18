@@ -15,12 +15,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class QuotesHandler {
   Logger LOG = LoggerFactory.getLogger(QuotesHandler.class);
-  public static final List<String> ASSETS = Arrays.asList("AADHARHFC","ACC","AFCONS","ARE&M","ASIANPAINT","BAJAJ-AUTO","BANKINDIA","BEL","BPCL");
-  final Map<String,Quote> cachedQuotes = new HashMap<>();
+  public static final List<String> ASSETS = Arrays.asList("AADHARHFC", "ACC", "AFCONS", "ARE&M",
+      "ASIANPAINT", "BAJAJ-AUTO", "BANKINDIA", "BEL", "BPCL");
+  final Map<String, Quote> cachedQuotes = new HashMap<>();
 
   public void handle(RoutingContext routingContext) {
-    ASSETS.forEach(symbol ->{
-      cachedQuotes.put(symbol,initRandomQuote(symbol));
+    ASSETS.forEach(symbol -> {
+      cachedQuotes.put(symbol, initRandomQuote(symbol));
     });
     String assetParam = routingContext.pathParam("asset");
     LOG.debug("Asset parameter: {}", assetParam);
