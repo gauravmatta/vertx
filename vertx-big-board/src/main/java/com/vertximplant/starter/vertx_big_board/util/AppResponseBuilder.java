@@ -1,6 +1,7 @@
 package com.vertximplant.starter.vertx_big_board.util;
 
 import com.google.common.base.Stopwatch;
+import com.vertximplant.starter.vertx_big_board.handler.QuotesHandler;
 import com.vertximplant.starter.vertx_big_board.helper.GSONHelper;
 import com.vertximplant.starter.vertx_big_board.pojo.LogEndIdentifier;
 import com.vertximplant.starter.vertx_big_board.pojo.exception.AppError;
@@ -8,13 +9,18 @@ import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
 import com.vertximplant.starter.vertx_big_board.pojo.response.GenericResponse;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import static com.google.common.net.HttpHeaders.ACCEPT;
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.*;
 
 public class AppResponseBuilder {
+
+  Logger LOG = LoggerFactory.getLogger(AppResponseBuilder.class);
 
   public Map<String, String> buildResponseHeaders(String transid) {
     Map<String, String> requestHeaders = new HashMap<>();
@@ -38,6 +44,7 @@ public class AppResponseBuilder {
   }
 
   public void exceptionResponseHandler(String transId, LogEndIdentifier logEndIdentifier,String eventName,Throwable t,HttpServerRequest httpServerRequest,String logAction,Stopwatch stopwatch){
+    LOG.error("Failed to Process in {}ms", Long.toString(stopwatch.elapsed(TimeUnit.MILLISECONDS)));
     if(t instanceof Failure failure){
       int statusCode = failure.getCode();
       String statusMessage = failure.getStatusMsg();
@@ -49,7 +56,7 @@ public class AppResponseBuilder {
       httpServerRequest.response().setStatusCode(statusCode).putHeader(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET)
         .end(GSONHelper.gsonToString(GenericResponse.buildFailedRespone(statusMessage)));
     }else {
-httpServerRequest.response().setStatusCode(500).putHeader(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET).end();
+httpServerRequest.response().setStatusCode(500).putHeader(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET).end(GSONHelper.gsonToString(GenericResponse.buildFailedRespone("UNHANDLED_FAILURE - "+logAction)));
     }
   }
 
