@@ -8,30 +8,29 @@ import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
 import com.vertximplant.starter.vertx_big_board.pojo.response.GenericResponse;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static com.google.common.net.HttpHeaders.ACCEPT;
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.*;
 
 public class AppResponseBuilder {
 
-  public Map<String,String> buildResponseHeaders(String transid){
-    Map<String,String> requestHeaders = new HashMap<>();
-    requestHeaders.put(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET);
-    requestHeaders.put(ACCEPT,HTTP_HEADER_CONTENT_VALUE);
-    requestHeaders.put(HTTP_HEADER_CORRELATION_ID,transid);
+  public Map<String, String> buildResponseHeaders(String transid) {
+    Map<String, String> requestHeaders = new HashMap<>();
+    requestHeaders.put(CONTENT_TYPE, HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET);
+    requestHeaders.put(ACCEPT, HTTP_HEADER_CONTENT_VALUE);
+    requestHeaders.put(HTTP_HEADER_CORRELATION_ID, transid);
     return requestHeaders;
   }
 
-  public void sendResponse(HttpServerRequest httpServerRequest, int statusCode, String responseString, Map<String,String> headers, Stopwatch stopwatch){
+  public void sendResponse(HttpServerRequest httpServerRequest, int statusCode,
+      String responseString, Map<String, String> headers, Stopwatch stopwatch) {
     HttpServerResponse httpServerResponse = httpServerRequest.response();
-    if(headers!=null){
-      headers.forEach((key,value)->{
-        if(key!=null && value!=null){
-          httpServerResponse.putHeader(key,value);
+    if (headers != null) {
+      headers.forEach((key, value) -> {
+        if (key != null && value != null) {
+          httpServerResponse.putHeader(key, value);
         }
       });
     }
@@ -54,7 +53,7 @@ httpServerRequest.response().setStatusCode(500).putHeader(CONTENT_TYPE,HTTP_HEAD
     }
   }
 
-  public LogEndIdentifier buildLogEndIdentifier(String identifierName,String identifier){
+  public LogEndIdentifier buildLogEndIdentifier(String identifierName, String identifier) {
     LogEndIdentifier.LogEndIdentifierBuilder requestBuilder = LogEndIdentifier.builder();
     requestBuilder.identifierName(identifierName).identifier(identifier);
     return requestBuilder.build();

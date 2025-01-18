@@ -13,11 +13,11 @@ public class GenericResponse {
   private String status;
   private String statusMsg;
 
-  public static GenericResponse buildSuccessResponse(){
-    return new GenericResponse("SUCCESS","SUCCESS");
+  public static GenericResponse buildSuccessResponse() {
+    return new GenericResponse("SUCCESS", "SUCCESS");
   }
 
-  public static GenericResponse buildFailedRespone(String statusMsg){
-    return new GenericResponse("FAILURE",statusMsg);
+  public static GenericResponse buildFailedRespone(String statusMsg) {
+    return new GenericResponse("FAILURE", statusMsg);
   }
 }

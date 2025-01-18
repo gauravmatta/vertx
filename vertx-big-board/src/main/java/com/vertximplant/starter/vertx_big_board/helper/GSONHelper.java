@@ -8,15 +8,15 @@ public class GSONHelper {
   public static Gson gson = new Gson();
   public static JsonParser jsonParser = new JsonParser();
 
-  public static <T> T stringToGSON(String jsonString,Class<T> clazz){
-    return gson.fromJson(jsonString,clazz);
+  public static <T> T stringToGSON(String jsonString, Class<T> clazz) {
+    return gson.fromJson(jsonString, clazz);
   }
 
-  public static String gsonToString(Object object){
+  public static String gsonToString(Object object) {
     return gson.toJson(object);
   }
 
-  public static JsonObject stringToJsonObject(String str){
+  public static JsonObject stringToJsonObject(String str) {
     return jsonParser.parse(str).getAsJsonObject();
   }
 }
