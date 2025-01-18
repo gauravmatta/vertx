@@ -49,8 +49,7 @@ public class QuotesHandler {
     }
     final JsonObject response = quote.get().toJsonObject();
     LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
-    routingContext.response().end(response.toBuffer());
-
+    handleSuccessResponse("t_test",routingContext,quote.get(),stopwatch);
   }
 
   private void handleSuccessResponse(String transid, RoutingContext routingContext, Quote quote,
