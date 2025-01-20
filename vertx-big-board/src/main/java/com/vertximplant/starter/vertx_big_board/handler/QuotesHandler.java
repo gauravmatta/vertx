@@ -54,7 +54,7 @@ public class QuotesHandler {
 
   private void handleSuccessResponse(String transid, RoutingContext routingContext, Quote quote,
       Stopwatch stopwatch) {
-    responseBuilder.sendResponse(routingContext.request(), SC_OK, gsonToString(quote),
+    responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, gsonToString(quote),
         responseBuilder.buildResponseHeaders(transid), stopwatch);
   }
 

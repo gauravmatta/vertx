@@ -44,6 +44,19 @@ public class AppResponseBuilder {
         .end(GSONHelper.gsonToString(GenericResponse.buildSuccessResponse(responseString)));
   }
 
+  public void sendOnlyResponse(HttpServerRequest httpServerRequest, int statusCode,
+      String responseString, Map<String, String> headers, Stopwatch stopwatch) {
+    HttpServerResponse httpServerResponse = httpServerRequest.response();
+    if (headers != null) {
+      headers.forEach((key, value) -> {
+        if (key != null && value != null) {
+          httpServerResponse.putHeader(key, value);
+        }
+      });
+    }
+    httpServerResponse.setStatusCode(statusCode).end(responseString);
+  }
+
   public void exceptionResponseHandler(String transId, LogEndIdentifier logEndIdentifier,String eventName,Throwable t,HttpServerRequest httpServerRequest,String logAction,Stopwatch stopwatch){
     LOG.error("Failed to Process in {}ms", Long.toString(stopwatch.elapsed(TimeUnit.MILLISECONDS)));
     if(t instanceof Failure failure){
