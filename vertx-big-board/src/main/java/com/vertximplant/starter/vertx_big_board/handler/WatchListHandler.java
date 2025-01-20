@@ -12,9 +12,7 @@ public class WatchListHandler {
 
   }
 
-  public void handlePut(RoutingContext routingContext) {
-  }
+  public void handlePut(RoutingContext routingContext) {}
 
-  public void handleDelete(RoutingContext routingContext) {
-  }
+  public void handleDelete(RoutingContext routingContext) {}
 }
