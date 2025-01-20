@@ -40,7 +40,8 @@ public class AppResponseBuilder {
         }
       });
     }
-    httpServerResponse.setStatusCode(statusCode).end(responseString);
+    httpServerResponse.setStatusCode(statusCode)
+        .end(GSONHelper.gsonToString(GenericResponse.buildSuccessResponse(responseString)));
   }
 
   public void exceptionResponseHandler(String transId, LogEndIdentifier logEndIdentifier,String eventName,Throwable t,HttpServerRequest httpServerRequest,String logAction,Stopwatch stopwatch){
@@ -49,14 +50,14 @@ public class AppResponseBuilder {
       int statusCode = failure.getCode();
       String statusMessage = failure.getStatusMsg();
       httpServerRequest.response().setStatusCode(statusCode).putHeader(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET)
-        .end(GSONHelper.gsonToString(GenericResponse.buildFailedRespone(statusMessage)));
+        .end(GSONHelper.gsonToString(GenericResponse.buildFailedResponse(statusMessage)));
     }else if(t instanceof AppError appError){
       int statusCode =appError.getErrorCode();
       String statusMessage = appError.getErrorMessage();
       httpServerRequest.response().setStatusCode(statusCode).putHeader(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET)
-        .end(GSONHelper.gsonToString(GenericResponse.buildFailedRespone(statusMessage)));
+        .end(GSONHelper.gsonToString(GenericResponse.buildFailedResponse(statusMessage)));
     }else {
-httpServerRequest.response().setStatusCode(500).putHeader(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET).end(GSONHelper.gsonToString(GenericResponse.buildFailedRespone("UNHANDLED_FAILURE - "+logAction)));
+httpServerRequest.response().setStatusCode(500).putHeader(CONTENT_TYPE,HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET).end(GSONHelper.gsonToString(GenericResponse.buildFailedResponse("UNHANDLED_FAILURE - "+logAction)));
     }
   }
 

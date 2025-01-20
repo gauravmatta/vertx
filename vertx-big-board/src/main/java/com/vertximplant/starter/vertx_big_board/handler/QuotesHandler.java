@@ -43,7 +43,7 @@ public class QuotesHandler {
       String response =
           new JsonObject().put("message", "quote for asset " + assetParam + " not found")
               .put("path", routingContext.normalizedPath()).toString();
-      handleErrorResponse("t_test", routingContext, "userId", new Failure(500, response),
+      handleErrorResponse("t_test", routingContext, "userId", new Failure(404, response),
           stopwatch);
       return;
     }

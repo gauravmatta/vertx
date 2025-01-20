@@ -17,7 +17,11 @@ public class GenericResponse {
     return new GenericResponse("SUCCESS", "SUCCESS");
   }
 
-  public static GenericResponse buildFailedRespone(String statusMsg) {
+  public static GenericResponse buildSuccessResponse(String statusMsg) {
+    return new GenericResponse("SUCCESS", statusMsg);
+  }
+
+  public static GenericResponse buildFailedResponse(String statusMsg) {
     return new GenericResponse("FAILURE", statusMsg);
   }
 }
