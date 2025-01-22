@@ -11,31 +11,31 @@ import io.vertx.ext.web.RoutingContext;
 import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
-
 import static com.vertximplant.starter.vertx_big_board.helper.GSONHelper.gsonToString;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 
 public class WatchListHandler {
 
   Logger LOG = LoggerFactory.getLogger(WatchListHandler.class);
-  final HashMap<UUID, WatchList> watchListPerAccount = new HashMap<UUID,WatchList>();
+  final HashMap<UUID, WatchList> watchListPerAccount = new HashMap<UUID, WatchList>();
   @Inject
   private AppResponseBuilder responseBuilder;
 
   public void handle(RoutingContext routingContext) {
     Stopwatch stopwatch = Stopwatch.createStarted();
     String accountId = routingContext.pathParam("accountId");
-    LOG.debug("{} for account {}",routingContext.normalizedPath(),accountId);
-    Optional<WatchList> watchList = Optional.ofNullable(watchListPerAccount.get(UUID.fromString(accountId)));
-    if(watchList.isEmpty()){
-      String response =  new JsonObject().put("message", "Watchlist for account " + accountId + " not available")
-          .put("path", routingContext.normalizedPath()).toString();
+    LOG.debug("{} for account {}", routingContext.normalizedPath(), accountId);
+    Optional<WatchList> watchList =
+        Optional.ofNullable(watchListPerAccount.get(UUID.fromString(accountId)));
+    if (watchList.isEmpty()) {
+      String response =
+          new JsonObject().put("message", "Watchlist for account " + accountId + " not available")
+              .put("path", routingContext.normalizedPath()).toString();
       handleErrorResponse("t_test", routingContext, "userId", new Failure(404, response),
-        stopwatch);
+          stopwatch);
       return;
     }
     final JsonObject response = watchList.get().toJsonObject();
@@ -46,25 +46,25 @@ public class WatchListHandler {
   public void handlePut(RoutingContext routingContext) {
     Stopwatch stopwatch = Stopwatch.createStarted();
     String accountId = routingContext.pathParam("accountId");
-    LOG.debug("{} for account {}",routingContext.normalizedPath(),accountId);
+    LOG.debug("{} for account {}", routingContext.normalizedPath(), accountId);
     JsonObject json = routingContext.getBodyAsJson();
     WatchList watchList = json.mapTo(WatchList.class);
-    watchListPerAccount.put(UUID.fromString(accountId),watchList);
+    watchListPerAccount.put(UUID.fromString(accountId), watchList);
     handleSuccessResponse("t_test", routingContext, watchList, stopwatch);
   }
 
   public void handleDelete(RoutingContext routingContext) {}
 
-  private void handleSuccessResponse(String transid, RoutingContext routingContext, WatchList watchList,
-                                     Stopwatch stopwatch) {
+  private void handleSuccessResponse(String transid, RoutingContext routingContext,
+      WatchList watchList, Stopwatch stopwatch) {
     responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, gsonToString(watchList),
-      responseBuilder.buildResponseHeaders(transid), stopwatch);
+        responseBuilder.buildResponseHeaders(transid), stopwatch);
   }
 
   private void handleErrorResponse(String transid, RoutingContext routingContext, String identifier,
-                                   Throwable throwable, Stopwatch stopwatch) {
+      Throwable throwable, Stopwatch stopwatch) {
     responseBuilder.exceptionResponseHandler(transid,
-      responseBuilder.buildLogEndIdentifier("user_id", identifier), "Get Quotes Information",
-      throwable, routingContext.request(), ((Failure) throwable).getStatusMsg(), stopwatch);
+        responseBuilder.buildLogEndIdentifier("user_id", identifier), "Get Quotes Information",
+        throwable, routingContext.request(), ((Failure) throwable).getStatusMsg(), stopwatch);
   }
 }

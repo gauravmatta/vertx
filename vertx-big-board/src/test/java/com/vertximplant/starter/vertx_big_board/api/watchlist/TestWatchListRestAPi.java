@@ -14,10 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 import java.util.UUID;
-
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.PORT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,23 +31,25 @@ public class TestWatchListRestAPi {
   }
 
   @Test
-  void adds_and_returns_watchlist_for_account(Vertx vertx, VertxTestContext testContext) throws Throwable {
+  void adds_and_returns_watchlist_for_account(Vertx vertx, VertxTestContext testContext)
+      throws Throwable {
     WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
     UUID accountId = UUID.randomUUID();
-    client.put("/account/watchlist/"+accountId.toString())
-      .sendJsonObject(getBody())
-      .onComplete(testContext.succeeding(bufferHttpResponse -> {
-      JsonObject json = bufferHttpResponse.bodyAsJsonObject();
-      LOG.info("Response: {}", json);
-      assertEquals("", json.encode());
-      assertEquals(200, bufferHttpResponse.statusCode());
-      testContext.completeNow();
-    }));
+    client.put("/account/watchlist/" + accountId.toString()).sendJsonObject(getBody())
+        .onComplete(testContext.succeeding(bufferHttpResponse -> {
+          JsonObject json = bufferHttpResponse.bodyAsJsonObject();
+          LOG.info("Response: {}", json);
+          assertEquals("", json.encode());
+          assertEquals(200, bufferHttpResponse.statusCode());
+          testContext.completeNow();
+        }));
   }
 
   private static JsonObject getBody() {
-    return new WatchList(Arrays.asList(new Asset("LIQUIDCASE"), new Asset("ZEEL"), new Asset("YESBANK"), new Asset("WAAREEENER"),
-      new Asset("IDEA"), new Asset("VEDL"), new Asset("UTIAMC"), new Asset("TORNTPOWER"), new Asset("TATATECH"),new Asset("TATAPOWER"))).toJsonObject();
+    return new WatchList(
+        Arrays.asList(new Asset("LIQUIDCASE"), new Asset("ZEEL"), new Asset("YESBANK"),
+            new Asset("WAAREEENER"), new Asset("IDEA"), new Asset("VEDL"), new Asset("UTIAMC"),
+            new Asset("TORNTPOWER"), new Asset("TATATECH"), new Asset("TATAPOWER"))).toJsonObject();
   }
 
 }
