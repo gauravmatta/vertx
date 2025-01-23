@@ -40,6 +40,8 @@ public class HttpRouter {
 
   public Router init(Vertx vertx) {
     this.router = Router.router(vertx);
+    this.router.route().handler(BodyHandler.create().setBodyLimit(1024).setHandleFileUploads(true))
+        .failureHandler(this::handleFailure);
     router.route().handler(getCorsHandler());
     router.route().handler(routingContext -> {
       routingContext.response().putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,

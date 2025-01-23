@@ -1,10 +1,10 @@
 package com.vertximplant.starter.vertx_big_board.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 
-@Value
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Asset {
   String name;
 }

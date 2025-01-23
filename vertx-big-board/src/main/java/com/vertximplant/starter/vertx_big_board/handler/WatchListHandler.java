@@ -47,7 +47,7 @@ public class WatchListHandler {
     Stopwatch stopwatch = Stopwatch.createStarted();
     String accountId = routingContext.pathParam("accountId");
     LOG.debug("{} for account {}", routingContext.normalizedPath(), accountId);
-    JsonObject json = routingContext.getBodyAsJson();
+    JsonObject json = routingContext.body().asJsonObject();
     WatchList watchList = json.mapTo(WatchList.class);
     watchListPerAccount.put(UUID.fromString(accountId), watchList);
     handleSuccessResponse("t_test", routingContext, watchList, stopwatch);

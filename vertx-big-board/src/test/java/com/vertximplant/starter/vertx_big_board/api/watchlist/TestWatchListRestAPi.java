@@ -3,6 +3,7 @@ package com.vertximplant.starter.vertx_big_board.api.watchlist;
 import com.vertximplant.starter.vertx_big_board.MainVerticle;
 import com.vertximplant.starter.vertx_big_board.pojo.Asset;
 import com.vertximplant.starter.vertx_big_board.pojo.WatchList;
+import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
@@ -35,14 +36,27 @@ public class TestWatchListRestAPi {
       throws Throwable {
     WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
     UUID accountId = UUID.randomUUID();
-    client.put("/account/watchlist/" + accountId.toString()).sendJsonObject(getBody())
+    client.put("/account/watchlist/" + accountId).sendJsonObject(getBody())
         .onComplete(testContext.succeeding(bufferHttpResponse -> {
           JsonObject json = bufferHttpResponse.bodyAsJsonObject();
-          LOG.info("Response: {}", json);
-          assertEquals("", json.encode());
+          LOG.info("Response PUT: {}", json);
+          assertEquals(
+              "{\"assets\":[{\"name\":\"LIQUIDCASE\"},{\"name\":\"ZEEL\"},{\"name\":\"YESBANK\"},{\"name\":\"WAAREEENER\"},{\"name\":\"IDEA\"},{\"name\":\"VEDL\"},{\"name\":\"UTIAMC\"},{\"name\":\"TORNTPOWER\"},{\"name\":\"TATATECH\"},{\"name\":\"TATAPOWER\"}]}",
+              json.encode());
           assertEquals(200, bufferHttpResponse.statusCode());
-          testContext.completeNow();
-        }));
+        })).compose(next -> {
+          client.get("/account/watchlist/" + accountId).send()
+              .onComplete(testContext.succeeding(bufferHttpResponse -> {
+                JsonObject json = bufferHttpResponse.bodyAsJsonObject();
+                LOG.info("Response GET: {}", json);
+                assertEquals(
+                    "{\"assets\":[{\"name\":\"LIQUIDCASE\"},{\"name\":\"ZEEL\"},{\"name\":\"YESBANK\"},{\"name\":\"WAAREEENER\"},{\"name\":\"IDEA\"},{\"name\":\"VEDL\"},{\"name\":\"UTIAMC\"},{\"name\":\"TORNTPOWER\"},{\"name\":\"TATATECH\"},{\"name\":\"TATAPOWER\"}]}",
+                    json.encode());
+                assertEquals(200, bufferHttpResponse.statusCode());
+                testContext.completeNow();
+              }));
+          return Future.succeededFuture();
+        });
   }
 
   private static JsonObject getBody() {
