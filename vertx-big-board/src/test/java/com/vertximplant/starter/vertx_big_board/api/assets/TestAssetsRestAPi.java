@@ -2,7 +2,6 @@ package com.vertximplant.starter.vertx_big_board.api.assets;
 
 import com.vertximplant.starter.vertx_big_board.MainVerticle;
 import io.netty.handler.codec.http.HttpHeaderValues;
-import io.netty.handler.codec.http.HttpHeaders;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.client.WebClient;
@@ -31,7 +30,7 @@ public class TestAssetsRestAPi {
   }
 
   @Test
-  void returns_all_assets(Vertx vertx, VertxTestContext testContext) throws Throwable {
+  void returns_all_assets(Vertx vertx, VertxTestContext testContext) {
     WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
     client.get("/assets").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
@@ -46,7 +45,7 @@ public class TestAssetsRestAPi {
   }
 
   @Test
-  void returns_all_assetsApi(Vertx vertx, VertxTestContext testContext) throws Throwable {
+  void returns_all_assetsApi(Vertx vertx, VertxTestContext testContext) {
     WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
     client.get("/assets_api").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
