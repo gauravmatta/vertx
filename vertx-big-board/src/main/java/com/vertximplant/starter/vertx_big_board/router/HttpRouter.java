@@ -58,8 +58,8 @@ public class HttpRouter {
   }
 
   private void healthRouter() {
-    router.route(HEALTH_ROUTE).handler(healthHandler::handle);
-    router.get(HEALTH_ROUTE).handler(healthHandler::handle);
+    router.route(HEALTH_ROUTE).handler(healthHandler);
+    router.get(HEALTH_ROUTE).handler(healthHandler);
   }
 
   private void rootRouter() {
@@ -72,7 +72,7 @@ public class HttpRouter {
 
   private void assetsRouter() {
     router.route("/assets").handler(BodyHandler.create()).failureHandler(this::handleFailure);
-    router.get("/assets").handler(assetsHandler::handle);
+    router.get("/assets").handler(assetsHandler);
   }
 
   private CorsHandler getCorsHandler() {

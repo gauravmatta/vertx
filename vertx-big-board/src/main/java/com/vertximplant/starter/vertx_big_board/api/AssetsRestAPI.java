@@ -21,7 +21,7 @@ public class AssetsRestAPI {
 
   public void attach(Router router) {
     router.route("/assets_api").handler(BodyHandler.create()).failureHandler(this::handleFailure);
-    router.get("/assets_api").handler(assetsHandler::handle);
+    router.get("/assets_api").handler(assetsHandler);
   }
 
   private void handleFailure(RoutingContext routingContext) {
