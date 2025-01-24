@@ -61,7 +61,7 @@ public class WatchListHandler {
     Stopwatch stopwatch = Stopwatch.createStarted();
     String accountId = getAccountId(routingContext);
     final WatchList deleted = watchListPerAccount.remove(UUID.fromString(accountId));
-    LOG.info("Deleted: {},Remaining: {}",deleted,watchListPerAccount.values());
+    LOG.info("Deleted: {},Remaining: {}", deleted, watchListPerAccount.values());
     handleSuccessResponse("t_test", routingContext, deleted, stopwatch);
   }
 
