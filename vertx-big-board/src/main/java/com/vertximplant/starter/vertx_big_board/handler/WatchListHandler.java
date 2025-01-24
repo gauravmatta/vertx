@@ -26,8 +26,7 @@ public class WatchListHandler {
 
   public void handle(RoutingContext routingContext) {
     Stopwatch stopwatch = Stopwatch.createStarted();
-    String accountId = routingContext.pathParam("accountId");
-    LOG.debug("{} for account {}", routingContext.normalizedPath(), accountId);
+    String accountId = getAccountId(routingContext);
     Optional<WatchList> watchList =
         Optional.ofNullable(watchListPerAccount.get(UUID.fromString(accountId)));
     if (watchList.isEmpty()) {
@@ -45,15 +44,26 @@ public class WatchListHandler {
 
   public void handlePut(RoutingContext routingContext) {
     Stopwatch stopwatch = Stopwatch.createStarted();
-    String accountId = routingContext.pathParam("accountId");
-    LOG.debug("{} for account {}", routingContext.normalizedPath(), accountId);
+    String accountId = getAccountId(routingContext);
     JsonObject json = routingContext.body().asJsonObject();
     WatchList watchList = json.mapTo(WatchList.class);
     watchListPerAccount.put(UUID.fromString(accountId), watchList);
     handleSuccessResponse("t_test", routingContext, watchList, stopwatch);
   }
 
-  public void handleDelete(RoutingContext routingContext) {}
+  private String getAccountId(RoutingContext routingContext) {
+    String accountId = routingContext.pathParam("accountId");
+    LOG.debug("{} for account {}", routingContext.normalizedPath(), accountId);
+    return accountId;
+  }
+
+  public void handleDelete(RoutingContext routingContext) {
+    Stopwatch stopwatch = Stopwatch.createStarted();
+    String accountId = getAccountId(routingContext);
+    final WatchList deleted = watchListPerAccount.remove(UUID.fromString(accountId));
+    LOG.info("Deleted: {},Remaining: {}",deleted,watchListPerAccount.values());
+    handleSuccessResponse("t_test", routingContext, deleted, stopwatch);
+  }
 
   private void handleSuccessResponse(String transid, RoutingContext routingContext,
       WatchList watchList, Stopwatch stopwatch) {

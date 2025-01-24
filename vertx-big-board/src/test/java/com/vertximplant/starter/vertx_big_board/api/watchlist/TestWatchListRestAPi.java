@@ -59,6 +59,33 @@ public class TestWatchListRestAPi {
         });
   }
 
+  @Test
+  void adds_and_deletes_watchlist_for_account(Vertx vertx,VertxTestContext testContext){
+    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    UUID accountId = UUID.randomUUID();
+    client.put("/account/watchlist/" + accountId).sendJsonObject(getBody())
+      .onComplete(testContext.succeeding(bufferHttpResponse -> {
+        JsonObject json = bufferHttpResponse.bodyAsJsonObject();
+        LOG.info("Response PUT: {}", json);
+        assertEquals(
+          "{\"assets\":[{\"name\":\"LIQUIDCASE\"},{\"name\":\"ZEEL\"},{\"name\":\"YESBANK\"},{\"name\":\"WAAREEENER\"},{\"name\":\"IDEA\"},{\"name\":\"VEDL\"},{\"name\":\"UTIAMC\"},{\"name\":\"TORNTPOWER\"},{\"name\":\"TATATECH\"},{\"name\":\"TATAPOWER\"}]}",
+          json.encode());
+        assertEquals(200, bufferHttpResponse.statusCode());
+      })).compose(next -> {
+        client.delete("/account/watchlist/" + accountId).send()
+          .onComplete(testContext.succeeding(bufferHttpResponse -> {
+            JsonObject json = bufferHttpResponse.bodyAsJsonObject();
+            LOG.info("Response DELETE: {}", json);
+            assertEquals(
+              "{\"assets\":[{\"name\":\"LIQUIDCASE\"},{\"name\":\"ZEEL\"},{\"name\":\"YESBANK\"},{\"name\":\"WAAREEENER\"},{\"name\":\"IDEA\"},{\"name\":\"VEDL\"},{\"name\":\"UTIAMC\"},{\"name\":\"TORNTPOWER\"},{\"name\":\"TATATECH\"},{\"name\":\"TATAPOWER\"}]}",
+              json.encode());
+            assertEquals(200, bufferHttpResponse.statusCode());
+            testContext.completeNow();
+          }));
+        return Future.succeededFuture();
+      });
+  }
+
   private static JsonObject getBody() {
     return new WatchList(
         Arrays.asList(new Asset("LIQUIDCASE"), new Asset("ZEEL"), new Asset("YESBANK"),
