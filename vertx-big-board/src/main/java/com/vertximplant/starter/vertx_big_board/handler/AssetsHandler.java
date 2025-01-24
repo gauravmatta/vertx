@@ -21,8 +21,9 @@ public class AssetsHandler {
         .add(new JsonObject().put("symbol", "CPSEETF"))
         .add(new JsonObject().put("symbol", "EXIDEIND"));
     LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
-    routingContext.response().putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,
-      HttpConstants.HTTP_HEADER_CONTENT_VALUE).end(response.toBuffer());
+    routingContext.response()
+        .putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE, HttpConstants.HTTP_HEADER_CONTENT_VALUE)
+        .end(response.toBuffer());
   }
 
 }
