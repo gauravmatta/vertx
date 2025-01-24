@@ -16,7 +16,7 @@ public class WatchListRestAPI {
 
   public void attach(Router router) {
     final String path = "/account/watchlist/:accountId";
-    router.get(path).handler(watchListHandler::handle);
+    router.get(path).handler(watchListHandler);
     router.put(path).handler(watchListHandler::handlePut);
     router.delete(path).handler(watchListHandler::handleDelete);
   }

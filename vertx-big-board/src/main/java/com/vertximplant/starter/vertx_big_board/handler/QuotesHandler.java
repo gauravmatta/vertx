@@ -7,6 +7,7 @@ import com.vertximplant.starter.vertx_big_board.pojo.Quote;
 import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
 import com.vertximplant.starter.vertx_big_board.util.AppResponseBuilder;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
@@ -19,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static com.vertximplant.starter.vertx_big_board.helper.GSONHelper.gsonToString;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 
-public class QuotesHandler {
+public class QuotesHandler implements Handler<RoutingContext> {
 
   @Inject
   private AppResponseBuilder responseBuilder;
@@ -31,6 +32,7 @@ public class QuotesHandler {
 
   final Map<String, Quote> cachedQuotes = new HashMap<>();
 
+  @Override
   public void handle(RoutingContext routingContext) {
     Stopwatch stopwatch = Stopwatch.createStarted();
     ASSETS.forEach(symbol -> {

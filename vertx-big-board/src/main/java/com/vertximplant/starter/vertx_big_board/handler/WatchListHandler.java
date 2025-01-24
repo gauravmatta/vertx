@@ -6,6 +6,7 @@ import com.vertximplant.starter.vertx_big_board.pojo.Quote;
 import com.vertximplant.starter.vertx_big_board.pojo.WatchList;
 import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
 import com.vertximplant.starter.vertx_big_board.util.AppResponseBuilder;
+import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import lombok.extern.java.Log;
@@ -17,10 +18,10 @@ import java.util.UUID;
 import static com.vertximplant.starter.vertx_big_board.helper.GSONHelper.gsonToString;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 
-public class WatchListHandler {
+public class WatchListHandler implements Handler<RoutingContext> {
 
   Logger LOG = LoggerFactory.getLogger(WatchListHandler.class);
-  final HashMap<UUID, WatchList> watchListPerAccount = new HashMap<UUID, WatchList>();
+  final HashMap<UUID, WatchList> watchListPerAccount = new HashMap<>();
   @Inject
   private AppResponseBuilder responseBuilder;
 

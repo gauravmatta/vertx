@@ -13,6 +13,6 @@ public class QuotesRestAPI {
   private QuotesHandler quotesHandler;
 
   public void attach(Router router) {
-    router.get("/quotes/:asset").handler(quotesHandler::handle);
+    router.get("/quotes/:asset").handler(quotesHandler);
   }
 }
