@@ -23,6 +23,7 @@ public class AssetsHandler {
     LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
     routingContext.response()
         .putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE, HttpConstants.HTTP_HEADER_CONTENT_VALUE)
+      .putHeader("my-header","my-value")
         .end(response.toBuffer());
   }
 

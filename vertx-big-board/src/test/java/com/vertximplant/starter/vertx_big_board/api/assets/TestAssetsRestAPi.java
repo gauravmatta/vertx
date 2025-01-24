@@ -40,6 +40,7 @@ public class TestAssetsRestAPi {
       assertEquals(200, bufferHttpResponse.statusCode());
       assertEquals(HttpHeaderValues.APPLICATION_JSON.toString(),
           bufferHttpResponse.getHeader(HTTP_HEADER_CONTENT_TYPE));
+      assertEquals("my-value",bufferHttpResponse.getHeader("my-header"));
       testContext.completeNow();
     }));
   }
