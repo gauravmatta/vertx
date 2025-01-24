@@ -1,6 +1,7 @@
 package com.vertximplant.starter.vertx_big_board.handler;
 
 import com.google.inject.Singleton;
+import com.vertximplant.starter.vertx_big_board.constants.HttpConstants;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
@@ -20,7 +21,8 @@ public class AssetsHandler {
         .add(new JsonObject().put("symbol", "CPSEETF"))
         .add(new JsonObject().put("symbol", "EXIDEIND"));
     LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
-    routingContext.response().end(response.toBuffer());
+    routingContext.response().putHeader(HttpConstants.HTTP_HEADER_CONTENT_TYPE,
+      HttpConstants.HTTP_HEADER_CONTENT_VALUE).end(response.toBuffer());
   }
 
 }
