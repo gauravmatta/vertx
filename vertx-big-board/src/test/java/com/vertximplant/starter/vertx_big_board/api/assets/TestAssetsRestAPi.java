@@ -1,6 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.assets;
 
-import com.vertximplant.starter.vertx_big_board.MainVerticle;
+import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
