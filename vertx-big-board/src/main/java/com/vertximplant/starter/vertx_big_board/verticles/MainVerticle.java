@@ -1,16 +1,13 @@
 package com.vertximplant.starter.vertx_big_board.verticles;
 
-import com.google.inject.Guice;
 import com.vertximplant.starter.vertx_big_board.router.HttpRouter;
-import io.vertx.core.*;
-import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.HttpServerOptions;
-import io.vertx.ext.web.Router;
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.DeploymentOptions;
+import io.vertx.core.Promise;
+import io.vertx.core.Vertx;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.concurrent.TimeUnit;
-import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.PORT;
 
 public class MainVerticle extends AbstractVerticle {
 
