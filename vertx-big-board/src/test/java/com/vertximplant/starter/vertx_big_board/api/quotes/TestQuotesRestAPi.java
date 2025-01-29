@@ -1,6 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.quotes;
 
-import com.vertximplant.starter.vertx_big_board.MainVerticle;
+import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;

@@ -19,7 +19,7 @@
     <vertx.version>4.5.11</vertx.version>
     <junit-jupiter.version>5.9.1</junit-jupiter.version>
     <formatter-maven-plugin-version>2.10.0</formatter-maven-plugin-version>
-    <main.verticle>com.vertximplant.starter.vertx_big_board.MainVerticle</main.verticle>
+    <main.verticle>com.vertximplant.starter.vertx_big_board.verticles.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
   </properties>
 

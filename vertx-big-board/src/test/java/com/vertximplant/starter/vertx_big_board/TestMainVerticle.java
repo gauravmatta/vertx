@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board;
 
+import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.junit5.VertxExtension;
 import io.vertx.junit5.VertxTestContext;

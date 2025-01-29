@@ -1,6 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.watchlist;
 
-import com.vertximplant.starter.vertx_big_board.MainVerticle;
+import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import com.vertximplant.starter.vertx_big_board.pojo.Asset;
 import com.vertximplant.starter.vertx_big_board.pojo.WatchList;
 import io.vertx.core.Future;
