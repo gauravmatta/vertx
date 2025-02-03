@@ -22,24 +22,24 @@ public class MainVerticle extends AbstractVerticle {
     vertx.exceptionHandler(error -> {
       LOG.error("Unhandled:", error);
     });
-    vertx.deployVerticle(new MainVerticle())
-      .onFailure(err -> LOG.error("Failed to deploy:",err))
-      .onSuccess(id ->LOG.info("Deployed {} with id {}", MainVerticle.class.getSimpleName(),id));
+    vertx.deployVerticle(new MainVerticle()).onFailure(err -> LOG.error("Failed to deploy:", err))
+        .onSuccess(
+            id -> LOG.info("Deployed {} with id {}", MainVerticle.class.getSimpleName(), id));
   }
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     LOG.info("Available Number of Processers are {}", getProcessors());
-    vertx.deployVerticle(RestAPIVerticle.class.getName(),new DeploymentOptions().setInstances(
-        getProcessors()
-      ))
-      .onFailure(startPromise::fail).onSuccess(id->{
-        LOG.info("Deployed {} with id {}",RestAPIVerticle.class.getSimpleName(),id);
-        startPromise.complete();
-      });
+    vertx
+        .deployVerticle(RestAPIVerticle.class.getName(),
+            new DeploymentOptions().setInstances(getProcessors()))
+        .onFailure(startPromise::fail).onSuccess(id -> {
+          LOG.info("Deployed {} with id {}", RestAPIVerticle.class.getSimpleName(), id);
+          startPromise.complete();
+        });
   }
 
   private static int getProcessors() {
-    return Math.max(1,Runtime.getRuntime().availableProcessors());
+    return Math.max(1, Runtime.getRuntime().availableProcessors());
   }
 }
