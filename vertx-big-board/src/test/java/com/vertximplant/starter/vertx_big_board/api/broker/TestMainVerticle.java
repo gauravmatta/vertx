@@ -1,4 +1,4 @@
-package com.vertximplant.starter.vertx_big_board;
+package com.vertximplant.starter.vertx_big_board.api.broker;
 
 import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.vertx.core.Vertx;
