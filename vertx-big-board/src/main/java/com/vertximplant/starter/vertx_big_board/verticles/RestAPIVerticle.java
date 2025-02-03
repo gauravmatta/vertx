@@ -11,9 +11,7 @@ import io.vertx.ext.web.Router;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.TimeUnit;
-
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.PORT;
 
 public class RestAPIVerticle extends AbstractVerticle {
@@ -28,6 +26,7 @@ public class RestAPIVerticle extends AbstractVerticle {
     bootstrapGoogleGuice();
     bootStrapHttpServer(startPromise);
   }
+
   private void bootstrapGoogleGuice() {
     Guice.createInjector().injectMembers(this);
   }
@@ -47,7 +46,7 @@ public class RestAPIVerticle extends AbstractVerticle {
   }
 
   private void setVerticleStartStatus(Promise<Void> startPromise,
-                                      AsyncResult<HttpServer> httpServerAsyncResult) {
+      AsyncResult<HttpServer> httpServerAsyncResult) {
     if (httpServerAsyncResult.succeeded()) {
       startPromise.complete();
       LOG.info("HTTP server started on port 8888");
@@ -59,6 +58,6 @@ public class RestAPIVerticle extends AbstractVerticle {
   private void initHttpRequestHandler(HttpServer httpServer) {
     Router router = this.httpRouter.init(vertx);
     httpServer.requestHandler(router)
-      .exceptionHandler(error -> LOG.error("HTTP Server error: ", error));
+        .exceptionHandler(error -> LOG.error("HTTP Server error: ", error));
   }
 }

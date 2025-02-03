@@ -8,7 +8,6 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 @Singleton
@@ -32,15 +31,15 @@ public class AssetsHandler implements Handler<RoutingContext> {
   }
 
   /**
-   * Simulating a delay
-   * Used to simulate scaling and load testing
+   * Simulating a delay Used to simulate scaling and load testing
+   * 
    * @param routingContext routing context
    */
   private static void artificialSleep(RoutingContext routingContext) {
     try {
-      //Simulating a delay
+      // Simulating a delay
       final int random = ThreadLocalRandom.current().nextInt(100, 300);
-      if(random%2==0){
+      if (random % 2 == 0) {
         Thread.sleep(random);
         throw new RuntimeException("Simulating a failure...");
       }
