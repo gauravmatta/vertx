@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.verticles;
 
+import com.vertximplant.starter.vertx_big_board.config.ConfigLoader;
 import com.vertximplant.starter.vertx_big_board.router.HttpRouter;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
