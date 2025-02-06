@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.assets;
 
+import com.vertximplant.starter.vertx_big_board.config.ConfigLoader;
 import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.vertx.core.Vertx;
@@ -14,23 +15,24 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.HTTP_HEADER_CONTENT_TYPE;
-import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.PORT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(VertxExtension.class)
 public class TestAssetsRestAPi {
 
   private static final Logger LOG = LoggerFactory.getLogger(TestAssetsRestAPi.class);
+  public static final int TEST_SERVER_PORT = 9000;
 
   @BeforeEach
   void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
+    System.setProperty(ConfigLoader.SERVER_PORT, String.valueOf(TEST_SERVER_PORT));
     vertx.deployVerticle(new MainVerticle())
         .onComplete(testContext.succeeding(id -> testContext.completeNow()));
   }
 
   @Test
   void returns_all_assets(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
     client.get("/assets").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
@@ -47,7 +49,7 @@ public class TestAssetsRestAPi {
 
   @Test
   void returns_all_assetsApi(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
     client.get("/assets_api").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
