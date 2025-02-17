@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.quotes;
 
+import com.vertximplant.starter.vertx_big_board.api.broker.AbstractRestApiTest;
 import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
@@ -16,19 +17,13 @@ import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.P
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(VertxExtension.class)
-public class TestQuotesRestAPi {
+public class TestQuotesRestAPi extends AbstractRestApiTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(TestQuotesRestAPi.class);
 
-  @BeforeEach
-  void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-    vertx.deployVerticle(new MainVerticle())
-        .onComplete(testContext.succeeding(id -> testContext.completeNow()));
-  }
-
   @Test
   void returns_quote_for_asset(Vertx vertx, VertxTestContext testContext) throws Throwable {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = getWebClient(vertx);
     client.get("/quotes/BANKINDIA").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonObject json = bufferHttpResponse.bodyAsJsonObject();
       LOG.info("Response: {}", json);
@@ -38,10 +33,14 @@ public class TestQuotesRestAPi {
     }));
   }
 
+  private static WebClient getWebClient(Vertx vertx) {
+    return WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
+  }
+
   @Test
   void returns_not_found_for_unknown_asset(Vertx vertx, VertxTestContext testContext)
       throws Throwable {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = getWebClient(vertx);
     client.get("/quotes/UNKNOWN").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonObject json = bufferHttpResponse.bodyAsJsonObject();
       LOG.info("Response: {}", json);

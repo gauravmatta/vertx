@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.assets;
 
+import com.vertximplant.starter.vertx_big_board.api.broker.AbstractRestApiTest;
 import com.vertximplant.starter.vertx_big_board.config.ConfigLoader;
 import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.netty.handler.codec.http.HttpHeaderValues;
@@ -19,21 +20,13 @@ import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.P
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(VertxExtension.class)
-public class TestAssetsRestAPi {
+public class TestAssetsRestAPi extends AbstractRestApiTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(TestAssetsRestAPi.class);
-  public static final int TEST_SERVER_PORT = 9000;
-
-  @BeforeEach
-  void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-    System.setProperty(ConfigLoader.SERVER_PORT, String.valueOf(TEST_SERVER_PORT));
-    vertx.deployVerticle(new MainVerticle())
-        .onComplete(testContext.succeeding(id -> testContext.completeNow()));
-  }
 
   @Test
   void returns_all_assets(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
+    WebClient client = getWebClient(vertx);
     client.get("/assets").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
@@ -50,7 +43,7 @@ public class TestAssetsRestAPi {
 
   @Test
   void returns_all_assetsApi(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = getWebClient(vertx);
     client.get("/assets_api").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
@@ -60,5 +53,9 @@ public class TestAssetsRestAPi {
       assertEquals(200, bufferHttpResponse.statusCode());
       testContext.completeNow();
     }));
+  }
+
+  private static WebClient getWebClient(Vertx vertx) {
+    return WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
   }
 }
