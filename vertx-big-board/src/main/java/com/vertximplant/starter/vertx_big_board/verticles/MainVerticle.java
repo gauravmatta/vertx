@@ -25,23 +25,21 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     LOG.info("Available Number of Processers are {}", getProcessors());
-    vertx
-      .deployVerticle(VersionInfoVerticle.class.getName())
-      .onFailure(startPromise::fail)
-      .onSuccess(id -> LOG.info("Deployed {} with id {}",VersionInfoVerticle.class.getSimpleName(),id))
-      .compose(next ->
-        deployRestApiVerticle(startPromise)
-      );
+    vertx.deployVerticle(VersionInfoVerticle.class.getName()).onFailure(startPromise::fail)
+        .onSuccess(
+            id -> LOG.info("Deployed {} with id {}", VersionInfoVerticle.class.getSimpleName(), id))
+        .compose(next -> deployRestApiVerticle(startPromise));
 
   }
 
   private Future<String> deployRestApiVerticle(Promise<Void> startPromise) {
-    return vertx.deployVerticle(RestAPIVerticle.class.getName(),
-        new DeploymentOptions().setInstances(getProcessors()))
-      .onFailure(startPromise::fail).onSuccess(id -> {
-        LOG.info("Deployed {} with id {}", RestAPIVerticle.class.getSimpleName(), id);
-        startPromise.complete();
-      });
+    return vertx
+        .deployVerticle(RestAPIVerticle.class.getName(),
+            new DeploymentOptions().setInstances(getProcessors()))
+        .onFailure(startPromise::fail).onSuccess(id -> {
+          LOG.info("Deployed {} with id {}", RestAPIVerticle.class.getSimpleName(), id);
+          startPromise.complete();
+        });
   }
 
   private static int getProcessors() {

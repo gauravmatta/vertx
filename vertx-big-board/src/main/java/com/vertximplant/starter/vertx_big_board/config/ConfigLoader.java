@@ -29,7 +29,8 @@ public class ConfigLoader {
     ConfigStoreOptions propertyStore =
         new ConfigStoreOptions().setType("sys").setConfig(new JsonObject().put("cache", false));
 
-    ConfigStoreOptions ymlStore = new ConfigStoreOptions().setType("file").setFormat("yaml").setConfig(new JsonObject().put("path",CONFIG_FILE));
+    ConfigStoreOptions ymlStore = new ConfigStoreOptions().setType("file").setFormat("yaml")
+        .setConfig(new JsonObject().put("path", CONFIG_FILE));
 
 
     ConfigRetriever configRetriever = ConfigRetriever.create(vertx,

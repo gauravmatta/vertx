@@ -20,7 +20,7 @@ public class BrokerConfig {
       throw new RuntimeException("Server Port is not defined in the configuration");
     }
     final String version = config.getString("version");
-    if(Objects.isNull(version)){
+    if (Objects.isNull(version)) {
       throw new RuntimeException("Version is not configured in config file!");
     }
     return BrokerConfig.builder().serverPort(serverPort).version(version).build();
