@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.verticles;
 
+import com.vertximplant.starter.vertx_big_board.config.ConfigLoader;
 import com.vertximplant.starter.vertx_big_board.router.HttpRouter;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
@@ -13,11 +14,8 @@ public class MainVerticle extends AbstractVerticle {
 
   private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
 
-
-  @Inject
-  private HttpRouter httpRouter;
-
   public static void main(String[] args) {
+    System.setProperty(ConfigLoader.SERVER_PORT,"9000");
     Vertx vertx = Vertx.vertx();
     vertx.exceptionHandler(error -> {
       LOG.error("Unhandled:", error);
