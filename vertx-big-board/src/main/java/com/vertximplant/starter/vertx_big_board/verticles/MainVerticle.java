@@ -15,7 +15,7 @@ public class MainVerticle extends AbstractVerticle {
   private static final Logger LOG = LoggerFactory.getLogger(MainVerticle.class);
 
   public static void main(String[] args) {
-    System.setProperty(ConfigLoader.SERVER_PORT,"9000");
+    System.setProperty(ConfigLoader.SERVER_PORT, "9000");
     Vertx vertx = Vertx.vertx();
     vertx.exceptionHandler(error -> {
       LOG.error("Unhandled:", error);

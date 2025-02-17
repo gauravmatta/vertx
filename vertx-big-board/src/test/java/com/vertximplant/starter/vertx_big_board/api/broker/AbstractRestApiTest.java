@@ -13,6 +13,6 @@ public abstract class AbstractRestApiTest {
   void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
     System.setProperty(ConfigLoader.SERVER_PORT, String.valueOf(TEST_SERVER_PORT));
     vertx.deployVerticle(new MainVerticle())
-      .onComplete(testContext.succeeding(id -> testContext.completeNow()));
+        .onComplete(testContext.succeeding(id -> testContext.completeNow()));
   }
 }
