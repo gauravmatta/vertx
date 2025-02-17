@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ConfigLoader {
   public static final String SERVER_PORT = "SERVER_PORT";
+  public static final String CONFIG_FILE = "application.yml";
   static final List<String> EXPOSED_ENVIRONMENT_VARIABLES = List.of(SERVER_PORT);
   private static final Logger LOG = LoggerFactory.getLogger(ConfigLoader.class);
 
@@ -28,8 +29,11 @@ public class ConfigLoader {
     ConfigStoreOptions propertyStore =
         new ConfigStoreOptions().setType("sys").setConfig(new JsonObject().put("cache", false));
 
+    ConfigStoreOptions ymlStore = new ConfigStoreOptions().setType("file").setFormat("yaml").setConfig(new JsonObject().put("path",CONFIG_FILE));
+
+
     ConfigRetriever configRetriever = ConfigRetriever.create(vertx,
-        new ConfigRetrieverOptions().addStore(envStore).addStore(propertyStore));
+        new ConfigRetrieverOptions().addStore(ymlStore).addStore(envStore).addStore(propertyStore));
 
     return configRetriever.getConfig().map(BrokerConfig::from);
   }

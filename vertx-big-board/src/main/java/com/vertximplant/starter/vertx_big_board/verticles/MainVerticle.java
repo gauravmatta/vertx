@@ -2,10 +2,7 @@ package com.vertximplant.starter.vertx_big_board.verticles;
 
 import com.vertximplant.starter.vertx_big_board.config.ConfigLoader;
 import com.vertximplant.starter.vertx_big_board.router.HttpRouter;
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.DeploymentOptions;
-import io.vertx.core.Promise;
-import io.vertx.core.Vertx;
+import io.vertx.core.*;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,12 +26,22 @@ public class MainVerticle extends AbstractVerticle {
   public void start(Promise<Void> startPromise) throws Exception {
     LOG.info("Available Number of Processers are {}", getProcessors());
     vertx
-        .deployVerticle(RestAPIVerticle.class.getName(),
-            new DeploymentOptions().setInstances(getProcessors()))
-        .onFailure(startPromise::fail).onSuccess(id -> {
-          LOG.info("Deployed {} with id {}", RestAPIVerticle.class.getSimpleName(), id);
-          startPromise.complete();
-        });
+      .deployVerticle(VersionInfoVerticle.class.getName())
+      .onFailure(startPromise::fail)
+      .onSuccess(id -> LOG.info("Deployed {} with id {}",VersionInfoVerticle.class.getSimpleName(),id))
+      .compose(next ->
+        deployRestApiVerticle(startPromise)
+      );
+
+  }
+
+  private Future<String> deployRestApiVerticle(Promise<Void> startPromise) {
+    return vertx.deployVerticle(RestAPIVerticle.class.getName(),
+        new DeploymentOptions().setInstances(getProcessors()))
+      .onFailure(startPromise::fail).onSuccess(id -> {
+        LOG.info("Deployed {} with id {}", RestAPIVerticle.class.getSimpleName(), id);
+        startPromise.complete();
+      });
   }
 
   private static int getProcessors() {
