@@ -32,9 +32,7 @@ public class QuotesHandler implements Handler<RoutingContext> {
   @Override
   public void handle(RoutingContext routingContext) {
     Stopwatch stopwatch = Stopwatch.createStarted();
-    ASSETS.forEach(symbol -> {
-      cachedQuotes.put(symbol, initRandomQuote(symbol));
-    });
+    ASSETS.forEach(symbol -> cachedQuotes.put(symbol, initRandomQuote(symbol)));
     String assetParam = routingContext.pathParam("asset");
     LOG.debug("Asset parameter: {}", assetParam);
     Optional<Quote> quote = Optional.ofNullable(cachedQuotes.get(assetParam));
