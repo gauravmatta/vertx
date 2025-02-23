@@ -16,6 +16,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.HEALTH_ROUTE;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET;
 import static org.apache.hc.core5.http.HttpHeaders.CONTENT_TYPE;
