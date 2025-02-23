@@ -1,7 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.util;
 
 import com.google.common.base.Stopwatch;
-import com.vertximplant.starter.vertx_big_board.handler.QuotesHandler;
 import com.vertximplant.starter.vertx_big_board.helper.GSONHelper;
 import com.vertximplant.starter.vertx_big_board.pojo.LogEndIdentifier;
 import com.vertximplant.starter.vertx_big_board.pojo.exception.AppError;

@@ -1,7 +1,5 @@
 package com.vertximplant.starter.vertx_big_board.api.assets;
 
-import com.vertximplant.starter.vertx_big_board.api.broker.AbstractRestApiTest;
-import com.vertximplant.starter.vertx_big_board.config.ConfigLoader;
 import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.vertx.core.Vertx;
@@ -20,13 +18,19 @@ import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.P
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(VertxExtension.class)
-public class TestAssetsRestAPi extends AbstractRestApiTest {
+public class TestAssetsRestAPi {
 
   private static final Logger LOG = LoggerFactory.getLogger(TestAssetsRestAPi.class);
 
+  @BeforeEach
+  void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
+    vertx.deployVerticle(new MainVerticle())
+        .onComplete(testContext.succeeding(id -> testContext.completeNow()));
+  }
+
   @Test
   void returns_all_assets(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = getWebClient(vertx);
+    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
     client.get("/assets").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
@@ -43,7 +47,7 @@ public class TestAssetsRestAPi extends AbstractRestApiTest {
 
   @Test
   void returns_all_assetsApi(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = getWebClient(vertx);
+    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
     client.get("/assets_api").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
@@ -53,9 +57,5 @@ public class TestAssetsRestAPi extends AbstractRestApiTest {
       assertEquals(200, bufferHttpResponse.statusCode());
       testContext.completeNow();
     }));
-  }
-
-  private static WebClient getWebClient(Vertx vertx) {
-    return WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
   }
 }

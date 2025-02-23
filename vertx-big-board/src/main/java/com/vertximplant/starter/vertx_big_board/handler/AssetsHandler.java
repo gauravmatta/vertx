@@ -32,7 +32,7 @@ public class AssetsHandler implements Handler<RoutingContext> {
 
   /**
    * Simulating a delay Used to simulate scaling and load testing
-   * 
+   *
    * @param routingContext routing context
    */
   private static void artificialSleep(RoutingContext routingContext) {
