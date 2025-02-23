@@ -11,11 +11,9 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-
 import static com.vertximplant.starter.vertx_big_board.helper.GSONHelper.gsonToString;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 

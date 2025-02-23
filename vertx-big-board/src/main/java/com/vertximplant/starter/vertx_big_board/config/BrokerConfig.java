@@ -4,7 +4,6 @@ import io.vertx.core.json.JsonObject;
 import lombok.Builder;
 import lombok.ToString;
 import lombok.Value;
-
 import java.util.Objects;
 
 @Builder
