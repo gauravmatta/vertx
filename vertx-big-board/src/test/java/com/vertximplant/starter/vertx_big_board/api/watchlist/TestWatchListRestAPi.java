@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.watchlist;
 
+import com.vertximplant.starter.vertx_big_board.api.broker.AbstractRestApiTest;
 import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import com.vertximplant.starter.vertx_big_board.pojo.Asset;
 import com.vertximplant.starter.vertx_big_board.pojo.WatchList;
@@ -21,20 +22,14 @@ import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.P
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(VertxExtension.class)
-public class TestWatchListRestAPi {
+public class TestWatchListRestAPi extends AbstractRestApiTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(TestWatchListRestAPi.class);
-
-  @BeforeEach
-  void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-    vertx.deployVerticle(new MainVerticle())
-        .onComplete(testContext.succeeding(id -> testContext.completeNow()));
-  }
 
   @Test
   void adds_and_returns_watchlist_for_account(Vertx vertx, VertxTestContext testContext)
       throws Throwable {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = getWebClient(vertx);
     UUID accountId = UUID.randomUUID();
     client.put("/account/watchlist/" + accountId).sendJsonObject(getBody())
         .onComplete(testContext.succeeding(bufferHttpResponse -> {
@@ -61,7 +56,7 @@ public class TestWatchListRestAPi {
 
   @Test
   void adds_and_deletes_watchlist_for_account(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = getWebClient(vertx);
     UUID accountId = UUID.randomUUID();
     client.put("/account/watchlist/" + accountId).sendJsonObject(getBody())
         .onComplete(testContext.succeeding(bufferHttpResponse -> {
@@ -93,4 +88,7 @@ public class TestWatchListRestAPi {
             new Asset("TORNTPOWER"), new Asset("TATATECH"), new Asset("TATAPOWER"))).toJsonObject();
   }
 
+  private static WebClient getWebClient(Vertx vertx) {
+    return WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
+  }
 }
