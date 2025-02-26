@@ -6,9 +6,9 @@ services:
     image: postgres:16-alpine
     environment:
       # Create db
-      POSTGRES_DB: vertx-stock-broker
+      POSTGRES_DB: vertx-big-board
       # Use postgres/secret user/password credentials
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: postgres
       # enforce UTC timezone
       TZ: UTC
     volumes:
