@@ -33,7 +33,7 @@ public class ConfigLoader {
         .setConfig(new JsonObject().put("path", CONFIG_FILE));
 
     ConfigRetriever configRetriever = ConfigRetriever.create(vertx,
-        new ConfigRetrieverOptions().addStore(ymlStore).addStore(envStore).addStore(propertyStore));
+        new ConfigRetrieverOptions().addStore(ymlStore).addStore(propertyStore).addStore(envStore));
 
     return configRetriever.getConfig().map(BrokerConfig::from);
   }
