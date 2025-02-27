@@ -24,7 +24,15 @@ public class BrokerConfig {
     if (Objects.isNull(version)) {
       throw new RuntimeException("Version is not configured in config file!");
     }
-    return BrokerConfig.builder().serverPort(serverPort).version(version).dbConfig(new DbConfig())
-        .build();
+    return BrokerConfig.builder().serverPort(serverPort).version(version)
+        .dbConfig(parseDbConfig(config)).build();
+  }
+
+  private static DbConfig parseDbConfig(final JsonObject config) {
+    return DbConfig.builder().host(config.getString(ConfigLoader.DB_HOST))
+        .port(config.getInteger(ConfigLoader.DB_PORT))
+        .database(config.getString(ConfigLoader.DB_DATABASE))
+        .user(config.getString(ConfigLoader.DB_USER))
+        .password(config.getString(ConfigLoader.DB_PASSWORD)).build();
   }
 }

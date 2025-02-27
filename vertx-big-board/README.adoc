@@ -31,4 +31,5 @@ To run your application:
 * https://groups.google.com/forum/?fromgroups#!forum/vertx[Vert.x User Group]
 * https://discord.gg/6ry7aqPWXy[Vert.x Discord]
 
-
+Use Envirnament Variables
+SERVER_PORT=8081;DB_HOST=localhost;DB_PORT=5432;DB_DATABASE=vertx-big-board;DB_USER=postgres;DB_PASSWORD=postgres

@@ -19,6 +19,7 @@ public class FlywayMigration {
 
   public static Future<Void> migrate(Vertx vertx, DbConfig dbConfig) {
     // Running on a blocking Thread
+    LOG.debug("DB Config: {}", dbConfig);
     return vertx.<Void>executeBlocking(promise -> {
       execute(dbConfig);
       promise.complete();
