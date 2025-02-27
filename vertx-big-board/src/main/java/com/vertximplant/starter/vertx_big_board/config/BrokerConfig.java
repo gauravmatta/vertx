@@ -24,11 +24,7 @@ public class BrokerConfig {
     if (Objects.isNull(version)) {
       throw new RuntimeException("Version is not configured in config file!");
     }
-    return BrokerConfig
-      .builder()
-      .serverPort(serverPort)
-      .version(version)
-      .dbConfig(new DbConfig())
-      .build();
+    return BrokerConfig.builder().serverPort(serverPort).version(version).dbConfig(new DbConfig())
+        .build();
   }
 }

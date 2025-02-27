@@ -9,7 +9,6 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
 public class ConfigLoader {
@@ -28,13 +27,13 @@ public class ConfigLoader {
         .setConfig(new JsonObject().put("keys", exposedKeys));
 
     ConfigStoreOptions propertyStore =
-      new ConfigStoreOptions().setType("sys").setConfig(new JsonObject().put("cache", false));
+        new ConfigStoreOptions().setType("sys").setConfig(new JsonObject().put("cache", false));
 
     ConfigStoreOptions ymlStore = new ConfigStoreOptions().setType("file").setFormat("yaml")
-      .setConfig(new JsonObject().put("path", CONFIG_FILE));
+        .setConfig(new JsonObject().put("path", CONFIG_FILE));
 
     ConfigRetriever configRetriever = ConfigRetriever.create(vertx,
-      new ConfigRetrieverOptions().addStore(ymlStore).addStore(envStore).addStore(propertyStore));
+        new ConfigRetrieverOptions().addStore(ymlStore).addStore(envStore).addStore(propertyStore));
 
     return configRetriever.getConfig().map(BrokerConfig::from);
   }

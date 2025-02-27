@@ -6,7 +6,7 @@ import lombok.Value;
 @Value
 @Builder
 public class DbConfig {
-  String host="localhost";
+  String host = "localhost";
   int port = 5432;
   String database = "vertx-big-board";
   String user = "postgres";
@@ -14,11 +14,7 @@ public class DbConfig {
 
   @Override
   public String toString() {
-    return "DbConfig{" +
-      "host='" + host + '\'' +
-      ", port=" + port +
-      ", database='" + database + '\'' +
-      ", user='" + user + '\'' +
-      '}';
+    return "DbConfig{" + "host='" + host + '\'' + ", port=" + port + ", database='" + database
+        + '\'' + ", user='" + user + '\'' + '}';
   }
 }
