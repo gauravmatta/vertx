@@ -6,10 +6,11 @@
     </encoder>
   </appender>
 
+  <logger name="com.vertximplant.starter.vertx_big_board" level="debug"/>
   <logger name="io.netty" level="warn"/>
   <logger name="io.vertx" level="info"/>
-
-  <root level="debug">
+  <logger name="org.flywaydb.core" level="info"/>
+  <root level="INFO">
     <appender-ref ref="STDOUT"/>
   </root>
 </Configuration>

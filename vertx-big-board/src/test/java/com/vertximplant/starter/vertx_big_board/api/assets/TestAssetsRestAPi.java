@@ -1,5 +1,6 @@
 package com.vertximplant.starter.vertx_big_board.api.assets;
 
+import com.vertximplant.starter.vertx_big_board.api.broker.AbstractRestApiTest;
 import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.vertx.core.Vertx;
@@ -18,19 +19,13 @@ import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.P
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(VertxExtension.class)
-public class TestAssetsRestAPi {
+public class TestAssetsRestAPi extends AbstractRestApiTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(TestAssetsRestAPi.class);
 
-  @BeforeEach
-  void deploy_verticle(Vertx vertx, VertxTestContext testContext) {
-    vertx.deployVerticle(new MainVerticle())
-        .onComplete(testContext.succeeding(id -> testContext.completeNow()));
-  }
-
   @Test
   void returns_all_assets(Vertx vertx, VertxTestContext testContext) {
-    WebClient client = WebClient.create(vertx, new WebClientOptions().setDefaultPort(PORT));
+    WebClient client = getWebClient(vertx);
     client.get("/assets").send().onComplete(testContext.succeeding(bufferHttpResponse -> {
       JsonArray objects = bufferHttpResponse.bodyAsJsonArray();
       LOG.info("Response: {}", objects);
@@ -43,6 +38,10 @@ public class TestAssetsRestAPi {
       assertEquals("my-value", bufferHttpResponse.getHeader("my-header"));
       testContext.completeNow();
     }));
+  }
+
+  private static WebClient getWebClient(Vertx vertx) {
+    return WebClient.create(vertx, new WebClientOptions().setDefaultPort(TEST_SERVER_PORT));
   }
 
   @Test
