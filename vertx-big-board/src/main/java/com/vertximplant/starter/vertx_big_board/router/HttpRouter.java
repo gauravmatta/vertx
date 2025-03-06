@@ -52,7 +52,7 @@ public class HttpRouter {
     this.assetsRouter();
     this.healthRouter();
     this.rootRouter();
-    assetsRestAPI.attach(router,db);
+    assetsRestAPI.attach(router, db);
     quotesRestAPI.attach(router);
     watchListRestAPI.attach(router);
     return router;

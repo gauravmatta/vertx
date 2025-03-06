@@ -22,26 +22,21 @@ public class GetAssetsFromDatabaseHandler implements Handler<RoutingContext> {
   @Override
   public void handle(RoutingContext routingContext) {
 
-    db.query("SELECT a.value FROM broker.assets a")
-      .execute()
-      .onFailure(error -> {
-        LOG.error("DB Failure: ",error);
-        routingContext.response().setStatusCode(HttpResponseStatus.INTERNAL_SERVER_ERROR.code())
+    db.query("SELECT a.value FROM broker.assets a").execute().onFailure(error -> {
+      LOG.error("DB Failure: ", error);
+      routingContext.response().setStatusCode(HttpResponseStatus.INTERNAL_SERVER_ERROR.code())
           .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
-          .end(new JsonObject()
-          .put("message","Failed to get assets from db!")
-          .put("path",routingContext.normalizedPath())
-          .toBuffer());
-      })
-      .onSuccess(result ->{
-        JsonArray response = new JsonArray();
-        result.forEach(row ->{
-          response.add(row.getValue("value"));
-        });
-        LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
-        routingContext.response()
+          .end(new JsonObject().put("message", "Failed to get assets from db!")
+              .put("path", routingContext.normalizedPath()).toBuffer());
+    }).onSuccess(result -> {
+      JsonArray response = new JsonArray();
+      result.forEach(row -> {
+        response.add(row.getValue("value"));
+      });
+      LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
+      routingContext.response()
           .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
           .end(response.toBuffer());
-      });
+    });
   }
 }

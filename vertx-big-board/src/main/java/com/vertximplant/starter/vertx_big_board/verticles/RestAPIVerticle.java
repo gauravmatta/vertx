@@ -39,13 +39,12 @@ public class RestAPIVerticle extends AbstractVerticle {
 
   private void bootStrapPgPool(BrokerConfig brokerConfig) {
     final PgConnectOptions connectOptions = new PgConnectOptions()
-      .setHost(brokerConfig.getDbConfig().getHost())
-      .setPort(brokerConfig.getDbConfig().getPort())
-      .setDatabase(brokerConfig.getDbConfig().getDatabase())
-      .setUser(brokerConfig.getDbConfig().getUser())
-      .setPassword(brokerConfig.getDbConfig().getPassword());
+        .setHost(brokerConfig.getDbConfig().getHost()).setPort(brokerConfig.getDbConfig().getPort())
+        .setDatabase(brokerConfig.getDbConfig().getDatabase())
+        .setUser(brokerConfig.getDbConfig().getUser())
+        .setPassword(brokerConfig.getDbConfig().getPassword());
     PoolOptions poolOptions = new PoolOptions().setMaxSize(4);
-    db= PgPool.pool(vertx,connectOptions,poolOptions);
+    db = PgPool.pool(vertx, connectOptions, poolOptions);
   }
 
   private void bootstrapGoogleGuice() {
@@ -77,7 +76,7 @@ public class RestAPIVerticle extends AbstractVerticle {
   }
 
   private void initHttpRequestHandler(HttpServer httpServer) {
-    Router router = this.httpRouter.init(vertx,db);
+    Router router = this.httpRouter.init(vertx, db);
     httpServer.requestHandler(router)
         .exceptionHandler(error -> LOG.error("HTTP Server error: ", error));
   }
