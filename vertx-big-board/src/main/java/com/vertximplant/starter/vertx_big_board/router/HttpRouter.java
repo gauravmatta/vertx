@@ -14,6 +14,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.CorsHandler;
+import io.vertx.pgclient.PgPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.HEALTH_ROUTE;
@@ -38,7 +39,7 @@ public class HttpRouter {
 
   private Router router;
 
-  public Router init(Vertx vertx) {
+  public Router init(Vertx vertx, PgPool db) {
     this.router = Router.router(vertx);
     this.router.route().handler(BodyHandler.create().setBodyLimit(1024).setHandleFileUploads(true))
         .failureHandler(this::handleFailure);
@@ -51,7 +52,7 @@ public class HttpRouter {
     this.assetsRouter();
     this.healthRouter();
     this.rootRouter();
-    assetsRestAPI.attach(router);
+    assetsRestAPI.attach(router, db);
     quotesRestAPI.attach(router);
     watchListRestAPI.attach(router);
     return router;

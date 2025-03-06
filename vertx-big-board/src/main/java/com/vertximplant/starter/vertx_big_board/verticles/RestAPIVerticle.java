@@ -10,6 +10,9 @@ import io.vertx.core.Promise;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
+import io.vertx.pgclient.PgConnectOptions;
+import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.PoolOptions;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +25,26 @@ public class RestAPIVerticle extends AbstractVerticle {
 
   private static final Logger LOG = LoggerFactory.getLogger(RestAPIVerticle.class);
 
+  private PgPool db;
+
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     ConfigLoader.loadBrokerConfig(vertx).onFailure(startPromise::fail).onSuccess(brokerConfig -> {
       LOG.info("Retrived Configuration From Broker Config: {}", brokerConfig);
       bootstrapGoogleGuice();
+      bootStrapPgPool(brokerConfig);
       bootStrapHttpServer(startPromise, brokerConfig);
     });
+  }
+
+  private void bootStrapPgPool(BrokerConfig brokerConfig) {
+    final PgConnectOptions connectOptions = new PgConnectOptions()
+        .setHost(brokerConfig.getDbConfig().getHost()).setPort(brokerConfig.getDbConfig().getPort())
+        .setDatabase(brokerConfig.getDbConfig().getDatabase())
+        .setUser(brokerConfig.getDbConfig().getUser())
+        .setPassword(brokerConfig.getDbConfig().getPassword());
+    PoolOptions poolOptions = new PoolOptions().setMaxSize(4);
+    db = PgPool.pool(vertx, connectOptions, poolOptions);
   }
 
   private void bootstrapGoogleGuice() {
@@ -60,7 +76,7 @@ public class RestAPIVerticle extends AbstractVerticle {
   }
 
   private void initHttpRequestHandler(HttpServer httpServer) {
-    Router router = this.httpRouter.init(vertx);
+    Router router = this.httpRouter.init(vertx, db);
     httpServer.requestHandler(router)
         .exceptionHandler(error -> LOG.error("HTTP Server error: ", error));
   }
