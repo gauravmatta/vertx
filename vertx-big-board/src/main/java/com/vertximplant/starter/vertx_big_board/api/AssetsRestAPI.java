@@ -2,10 +2,12 @@ package com.vertximplant.starter.vertx_big_board.api;
 
 import com.google.inject.Inject;
 import com.vertximplant.starter.vertx_big_board.handler.CustomAssetHandler;
+import com.vertximplant.starter.vertx_big_board.handler.GetAssetsFromDatabaseHandler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.pgclient.PgPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.HTTP_HEADER_CONTENT_VALUE_WITH_CHARSET;
@@ -19,9 +21,10 @@ public class AssetsRestAPI {
 
   private static final Logger LOG = LoggerFactory.getLogger(AssetsRestAPI.class);
 
-  public void attach(Router router) {
+  public void attach(Router router, PgPool db) {
     router.route("/assets_api").handler(BodyHandler.create()).failureHandler(this::handleFailure);
     router.get("/assets_api").handler(assetsHandler);
+    router.get("/pg/assets").handler(new GetAssetsFromDatabaseHandler(db));
   }
 
   private void handleFailure(RoutingContext routingContext) {
