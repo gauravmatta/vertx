@@ -2,10 +2,12 @@ package com.vertximplant.starter.vertx_big_board.handler;
 
 import com.google.common.base.Stopwatch;
 import com.google.inject.Inject;
+import com.vertximplant.starter.vertx_big_board.helper.DBResponseHelper;
 import com.vertximplant.starter.vertx_big_board.pojo.Asset;
 import com.vertximplant.starter.vertx_big_board.pojo.Quote;
 import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
 import com.vertximplant.starter.vertx_big_board.util.AppResponseBuilder;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
@@ -20,7 +22,7 @@ import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 public class QuotesHandler implements Handler<RoutingContext> {
 
   @Inject
-  private AppResponseBuilder responseBuilder;
+  private DBResponseHelper dbResponseHelper;
 
   Logger LOG = LoggerFactory.getLogger(QuotesHandler.class);
 
@@ -40,26 +42,13 @@ public class QuotesHandler implements Handler<RoutingContext> {
       String response =
           new JsonObject().put("message", "quote for asset " + assetParam + " not found")
               .put("path", routingContext.normalizedPath()).toString();
-      handleErrorResponse("t_test", routingContext, "userId", new Failure(404, response),
-          stopwatch);
+      dbResponseHelper.handleEmptyResponse("t_test", routingContext, "QuotesId", new Failure(404, response),
+          "Fetch Quotes",stopwatch);
       return;
     }
     final JsonObject response = quote.get().toJsonObject();
     LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
-    handleSuccessResponse("t_test", routingContext, quote.get(), stopwatch);
-  }
-
-  private void handleSuccessResponse(String transid, RoutingContext routingContext, Quote quote,
-      Stopwatch stopwatch) {
-    responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, gsonToString(quote),
-        responseBuilder.buildResponseHeaders(transid), stopwatch);
-  }
-
-  private void handleErrorResponse(String transid, RoutingContext routingContext, String identifier,
-      Throwable throwable, Stopwatch stopwatch) {
-    responseBuilder.exceptionResponseHandler(transid,
-        responseBuilder.buildLogEndIdentifier("user_id", identifier), "Get Quotes Information",
-        throwable, routingContext.request(), ((Failure) throwable).getStatusMsg(), stopwatch);
+    dbResponseHelper.handleSuccessResponse("t_test", routingContext, quote.get(), stopwatch);
   }
 
   private Quote initRandomQuote(String asset) {

@@ -12,6 +12,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.Pool;
 import io.vertx.sqlclient.PoolOptions;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class RestAPIVerticle extends AbstractVerticle {
 
   private static final Logger LOG = LoggerFactory.getLogger(RestAPIVerticle.class);
 
-  private PgPool db;
+  private Pool db;
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
