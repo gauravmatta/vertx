@@ -54,7 +54,7 @@ public class HttpRouter {
     this.healthRouter();
     this.rootRouter();
     assetsRestAPI.attach(router, db);
-    quotesRestAPI.attach(router,db);
+    quotesRestAPI.attach(router, db);
     watchListRestAPI.attach(router);
     return router;
   }

@@ -20,6 +20,7 @@ public class QuotesRestAPI {
 
   public void attach(Router router, final Pool db) {
     router.get("/quotes/:asset").handler(quotesHandler);
-    router.get("/pg/quotes/:asset").handler(routingContext -> getQuoteFromDatabaseHandler.handle(routingContext,db));
+    router.get("/pg/quotes/:asset")
+        .handler(routingContext -> getQuoteFromDatabaseHandler.handle(routingContext, db));
   }
 }

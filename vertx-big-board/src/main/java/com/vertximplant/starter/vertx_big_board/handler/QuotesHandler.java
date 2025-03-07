@@ -42,8 +42,8 @@ public class QuotesHandler implements Handler<RoutingContext> {
       String response =
           new JsonObject().put("message", "quote for asset " + assetParam + " not found")
               .put("path", routingContext.normalizedPath()).toString();
-      dbResponseHelper.handleEmptyResponse("t_test", routingContext, "QuotesId", new Failure(404, response),
-          "Fetch Quotes",stopwatch);
+      dbResponseHelper.handleEmptyResponse("t_test", routingContext, "QuotesId",
+          new Failure(404, response), "Fetch Quotes", stopwatch);
       return;
     }
     final JsonObject response = quote.get().toJsonObject();

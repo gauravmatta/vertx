@@ -14,7 +14,6 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import static com.vertximplant.starter.vertx_big_board.helper.GSONHelper.gsonToString;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 
@@ -29,34 +28,35 @@ public class DBResponseHelper {
     return error -> {
       LOG.error("DB Failure: ", error);
       routingContext.response().setStatusCode(HttpResponseStatus.INTERNAL_SERVER_ERROR.code())
-        .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
-        .end(new JsonObject().put("message", message)
-          .put("path", routingContext.normalizedPath()).toBuffer());
+          .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
+          .end(new JsonObject().put("message", message).put("path", routingContext.normalizedPath())
+              .toBuffer());
     };
   }
 
   public void handleEmptyResponse(String transid, RoutingContext routingContext, String identifier,
-                                   Throwable throwable,String eventName ,Stopwatch stopwatch) {
+      Throwable throwable, String eventName, Stopwatch stopwatch) {
     responseBuilder.exceptionResponseHandler(transid,
-      responseBuilder.buildLogEndIdentifier("user_id", identifier), eventName,
-      throwable, routingContext.request(), ((Failure) throwable).getStatusMsg(), stopwatch);
+        responseBuilder.buildLogEndIdentifier("user_id", identifier), eventName, throwable,
+        routingContext.request(), ((Failure) throwable).getStatusMsg(), stopwatch);
   }
 
   public void handleStringResponse(String transid, RoutingContext routingContext, String object,
-                                     Stopwatch stopwatch) {
+      Stopwatch stopwatch) {
     responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, object,
-      responseBuilder.buildResponseHeaders(transid), stopwatch);
+        responseBuilder.buildResponseHeaders(transid), stopwatch);
   }
 
   public void handleSuccessResponse(String transid, RoutingContext routingContext, Object object,
-                                     Stopwatch stopwatch) {
+      Stopwatch stopwatch) {
     responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, gsonToString(object),
-      responseBuilder.buildResponseHeaders(transid), stopwatch);
+        responseBuilder.buildResponseHeaders(transid), stopwatch);
   }
 
-//  public void handleSuccessJsonObjectResponse(String transid, RoutingContext routingContext, JsonObject object,
-//                                           Stopwatch stopwatch) {
-//    responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, object.toString(),
-//      responseBuilder.buildResponseHeaders(transid), stopwatch);
-//  }
+  // public void handleSuccessJsonObjectResponse(String transid, RoutingContext routingContext,
+  // JsonObject object,
+  // Stopwatch stopwatch) {
+  // responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, object.toString(),
+  // responseBuilder.buildResponseHeaders(transid), stopwatch);
+  // }
 }

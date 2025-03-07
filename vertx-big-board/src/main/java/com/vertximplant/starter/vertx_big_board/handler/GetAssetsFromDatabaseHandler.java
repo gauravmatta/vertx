@@ -24,18 +24,17 @@ public class GetAssetsFromDatabaseHandler implements Handler<RoutingContext> {
   @Override
   public void handle(RoutingContext routingContext) {
 
-    db.query("SELECT a.value FROM broker.assets a")
-            .execute()
-            .onFailure(DBResponseHelper.errorHandler(routingContext,"Failed to get assets from db!"))
-            .onSuccess(result -> {
-      JsonArray response = new JsonArray();
-      result.forEach(row -> {
-        response.add(row.getValue("value"));
-      });
-      LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
-      routingContext.response()
-          .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
-          .end(response.toBuffer());
-    });
+    db.query("SELECT a.value FROM broker.assets a").execute()
+        .onFailure(DBResponseHelper.errorHandler(routingContext, "Failed to get assets from db!"))
+        .onSuccess(result -> {
+          JsonArray response = new JsonArray();
+          result.forEach(row -> {
+            response.add(row.getValue("value"));
+          });
+          LOG.info("Path {} responds with {}", routingContext.normalizedPath(), response.encode());
+          routingContext.response()
+              .putHeader(HttpHeaders.CONTENT_TYPE, HttpHeaderValues.APPLICATION_JSON)
+              .end(response.toBuffer());
+        });
   }
 }
