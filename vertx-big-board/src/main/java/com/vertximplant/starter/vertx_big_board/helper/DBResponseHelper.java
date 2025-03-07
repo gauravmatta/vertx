@@ -2,18 +2,17 @@ package com.vertximplant.starter.vertx_big_board.helper;
 
 import com.google.common.base.Stopwatch;
 import com.google.inject.Inject;
-import com.vertximplant.starter.vertx_big_board.pojo.Quote;
 import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
 import com.vertximplant.starter.vertx_big_board.util.AppResponseBuilder;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpHeaders;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import static com.vertximplant.starter.vertx_big_board.helper.GSONHelper.gsonToString;
 import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 

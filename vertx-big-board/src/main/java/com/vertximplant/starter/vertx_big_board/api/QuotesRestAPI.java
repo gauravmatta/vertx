@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.vertximplant.starter.vertx_big_board.handler.GetQuoteFromDatabaseHandler;
 import com.vertximplant.starter.vertx_big_board.handler.QuotesHandler;
 import io.vertx.ext.web.Router;
-import io.vertx.pgclient.PgPool;
 import io.vertx.sqlclient.Pool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
