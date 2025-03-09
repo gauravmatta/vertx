@@ -52,10 +52,10 @@ public class DBResponseHelper {
         responseBuilder.buildResponseHeaders(transid), stopwatch);
   }
 
-  // public void handleSuccessJsonObjectResponse(String transid, RoutingContext routingContext,
-  // JsonObject object,
-  // Stopwatch stopwatch) {
-  // responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, object.toString(),
-  // responseBuilder.buildResponseHeaders(transid), stopwatch);
-  // }
+   public void handleSuccessJsonObjectResponse(String transid, RoutingContext routingContext,
+   JsonObject object,
+   Stopwatch stopwatch) {
+   responseBuilder.sendOnlyResponse(routingContext.request(), SC_OK, object.toString(),
+   responseBuilder.buildResponseHeaders(transid), stopwatch);
+   }
 }

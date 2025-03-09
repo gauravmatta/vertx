@@ -55,6 +55,7 @@ public class AppResponseBuilder {
         }
       });
     }
+    LOG.info("Processed in {}ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
     httpServerResponse.setStatusCode(statusCode).end(responseString);
   }
 

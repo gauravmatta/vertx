@@ -26,7 +26,8 @@ public class GetQuoteFromDatabaseHandler {
     LOG.debug("Asset parameter: {}", assetParam);
     SqlTemplate.forQuery(db,
         "SELECT q.asset,q.bid,q.ask,q.last_price,q.volume from broker.quotes q where asset =#{asset}")
-        .mapTo(QuoteEntity.class).execute(Collections.singletonMap("asset", assetParam))
+        .mapTo(QuoteEntity.class)
+        .execute(Collections.singletonMap("asset", assetParam))
         .onFailure(DBResponseHelper.errorHandler(routingContext,
             "Failed to get quote for asset " + assetParam + " from db!"))
         .onSuccess(quotes -> {
@@ -37,11 +38,11 @@ public class GetQuoteFromDatabaseHandler {
             dbResponseHelper.handleStringResponse("t_test", routingContext, response, stopwatch);
             return;
           }
-          // JsonObject response = quotes.iterator().next().toJsonObject();
-          // LOG.info("Path {} responds with {}", routingContext.normalizedPath(),
-          // response.encode());
-          // DBResponseHelper.handleSuccessJsonObjectResponse("t_test", routingContext,response,
-          // stopwatch);
+           JsonObject response = quotes.iterator().next().toJsonObject();
+           LOG.info("Path {} responds with {}", routingContext.normalizedPath(),
+           response.encode());
+          dbResponseHelper.handleSuccessJsonObjectResponse("t_test", routingContext,response,
+           stopwatch);
         });
   }
 
