@@ -13,13 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
-public class GetQuoteFromDatabaseHandler { // implements Handler<RoutingContext> {
+public class GetQuoteFromDatabaseHandler {
 
   private static final Logger LOG = LoggerFactory.getLogger(GetQuoteFromDatabaseHandler.class);
 
   @Inject
   private DBResponseHelper dbResponseHelper;
-
 
   public void handle(RoutingContext routingContext, Pool db) {
     Stopwatch stopwatch = Stopwatch.createStarted();
