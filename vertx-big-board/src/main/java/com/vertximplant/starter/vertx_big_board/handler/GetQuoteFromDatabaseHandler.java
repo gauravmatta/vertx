@@ -4,13 +4,13 @@ import com.google.common.base.Stopwatch;
 import com.google.inject.Inject;
 import com.vertximplant.starter.vertx_big_board.helper.DBResponseHelper;
 import com.vertximplant.starter.vertx_big_board.pojo.QuoteEntity;
+import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.sqlclient.Pool;
 import io.vertx.sqlclient.templates.SqlTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 
 public class GetQuoteFromDatabaseHandler {
@@ -34,7 +34,8 @@ public class GetQuoteFromDatabaseHandler {
             String response =
                 new JsonObject().put("message", "quote for asset " + assetParam + " not found")
                     .put("path", routingContext.normalizedPath()).toString();
-            dbResponseHelper.handleStringResponse("t_test", routingContext, response, stopwatch);
+            dbResponseHelper.handleEmptyResponse("t_test", routingContext, "QuotesId",
+                new Failure(204, response), "Fetch Quotes", stopwatch);
             return;
           }
           JsonObject response = quotes.iterator().next().toJsonObject();

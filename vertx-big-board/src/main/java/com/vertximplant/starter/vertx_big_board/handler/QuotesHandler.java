@@ -11,7 +11,6 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -40,7 +39,7 @@ public class QuotesHandler implements Handler<RoutingContext> {
           new JsonObject().put("message", "quote for asset " + assetParam + " not found")
               .put("path", routingContext.normalizedPath()).toString();
       dbResponseHelper.handleEmptyResponse("t_test", routingContext, "QuotesId",
-          new Failure(404, response), "Fetch Quotes", stopwatch);
+          new Failure(204, response), "Fetch Quotes", stopwatch);
       return;
     }
     final JsonObject response = quote.get().toJsonObject();

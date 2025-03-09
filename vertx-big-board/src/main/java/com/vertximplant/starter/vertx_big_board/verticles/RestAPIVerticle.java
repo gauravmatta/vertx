@@ -17,7 +17,6 @@ import io.vertx.sqlclient.PoolOptions;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.TimeUnit;
 
 public class RestAPIVerticle extends AbstractVerticle {

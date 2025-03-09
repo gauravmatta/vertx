@@ -10,11 +10,9 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import static com.google.common.net.HttpHeaders.ACCEPT;
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.*;
@@ -45,7 +43,7 @@ public class AppResponseBuilder {
         .end(GSONHelper.gsonToString(GenericResponse.buildSuccessResponse(responseString)));
   }
 
-  public void sendOnlyResponse(HttpServerRequest httpServerRequest, int statusCode,
+  public void sendJsonResponse(HttpServerRequest httpServerRequest, int statusCode,
       String responseString, Map<String, String> headers, Stopwatch stopwatch) {
     HttpServerResponse httpServerResponse = httpServerRequest.response();
     if (headers != null) {
