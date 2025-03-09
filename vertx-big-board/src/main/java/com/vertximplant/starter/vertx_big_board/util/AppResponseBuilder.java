@@ -10,9 +10,11 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import static com.google.common.net.HttpHeaders.ACCEPT;
 import static com.google.common.net.HttpHeaders.CONTENT_TYPE;
 import static com.vertximplant.starter.vertx_big_board.constants.HttpConstants.*;
@@ -53,6 +55,7 @@ public class AppResponseBuilder {
         }
       });
     }
+    LOG.info("Processed in {}ms", stopwatch.elapsed(TimeUnit.MILLISECONDS));
     httpServerResponse.setStatusCode(statusCode).end(responseString);
   }
 

@@ -1,13 +1,13 @@
 package com.vertximplant.starter.vertx_big_board.db.migration;
 
 import com.vertximplant.starter.vertx_big_board.config.DbConfig;
-import com.vertximplant.starter.vertx_big_board.verticles.MainVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
