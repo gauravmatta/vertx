@@ -2,6 +2,7 @@ package com.vertximplant.starter.vertx_big_board.api;
 
 import com.google.inject.Inject;
 import com.vertximplant.starter.vertx_big_board.handler.GetWatchListFromDatabaseHandler;
+import com.vertximplant.starter.vertx_big_board.handler.PutWatchListDatabaseHandler;
 import com.vertximplant.starter.vertx_big_board.handler.WatchListHandler;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -18,6 +19,9 @@ public class WatchListRestAPI {
   @Inject
   private GetWatchListFromDatabaseHandler getWatchListFromDatabaseHandler;
 
+  @Inject
+  private PutWatchListDatabaseHandler putWatchListDatabaseHandler;
+
   public void attach(Router router, Pool db) {
     final String path = "/account/watchlist/:accountId";
     router.get(path).handler(watchListHandler);
@@ -26,6 +30,7 @@ public class WatchListRestAPI {
     String pgPath = "/pg/account/watchlist/:accountId";
     router.get(pgPath)
         .handler(routingContext -> getWatchListFromDatabaseHandler.handle(routingContext, db));
+    router.put(pgPath).handler(routingContext -> putWatchListDatabaseHandler.handle(routingContext,db));
   }
 
   public static String getAccountId(RoutingContext routingContext) {
