@@ -30,7 +30,8 @@ public class WatchListRestAPI {
     String pgPath = "/pg/account/watchlist/:accountId";
     router.get(pgPath)
         .handler(routingContext -> getWatchListFromDatabaseHandler.handle(routingContext, db));
-    router.put(pgPath).handler(routingContext -> putWatchListDatabaseHandler.handle(routingContext,db));
+    router.put(pgPath)
+        .handler(routingContext -> putWatchListDatabaseHandler.handle(routingContext, db));
   }
 
   public static String getAccountId(RoutingContext routingContext) {
