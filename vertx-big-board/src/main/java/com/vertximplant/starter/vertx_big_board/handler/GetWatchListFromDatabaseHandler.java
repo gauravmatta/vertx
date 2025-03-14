@@ -34,7 +34,7 @@ public class GetWatchListFromDatabaseHandler {
             String response = new JsonObject()
                 .put("message", "watchlist for accountId " + accountId + " not found")
                 .put("path", routingContext.normalizedPath()).toString();
-            dbResponseHelper.handleEmptyResponse("t_test", routingContext, "WatchListId",
+            dbResponseHelper.handleErrorResponse("t_test", routingContext, "WatchListId",
                 new Failure(204, response), "Fetch WatchList", stopwatch);
             return;
           }

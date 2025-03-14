@@ -32,7 +32,7 @@ public class WatchListHandler implements Handler<RoutingContext> {
       String response =
           new JsonObject().put("message", "Watchlist for account " + accountId + " not available")
               .put("path", routingContext.normalizedPath()).toString();
-      dbResponseHelper.handleEmptyResponse("t_test", routingContext, "QuotesId",
+      dbResponseHelper.handleErrorResponse("t_test", routingContext, "QuotesId",
           new Failure(204, response), "Fetch Quotes", stopwatch);
       return;
     }

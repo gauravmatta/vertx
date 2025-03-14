@@ -34,6 +34,17 @@ public class DBResponseHelper {
   }
 
   public void handleEmptyResponse(String transid, RoutingContext routingContext, String identifier,
+      String eventName, Stopwatch stopwatch) {
+    JsonObject logObj = new JsonObject();
+    logObj.put("transid", transid);
+    logObj.put("identifier", identifier);
+    logObj.put("eventName", eventName);
+    LOG.info(logObj.toString());
+    responseBuilder.sendResponse(routingContext.request(), HttpResponseStatus.NO_CONTENT.code(), "",
+        responseBuilder.buildResponseHeaders(transid), stopwatch);
+  }
+
+  public void handleErrorResponse(String transid, RoutingContext routingContext, String identifier,
       Throwable throwable, String eventName, Stopwatch stopwatch) {
     responseBuilder.exceptionResponseHandler(transid,
         responseBuilder.buildLogEndIdentifier("user_id", identifier), eventName, throwable,
