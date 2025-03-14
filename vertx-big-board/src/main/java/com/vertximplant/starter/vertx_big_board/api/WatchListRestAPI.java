@@ -1,6 +1,7 @@
 package com.vertximplant.starter.vertx_big_board.api;
 
 import com.google.inject.Inject;
+import com.vertximplant.starter.vertx_big_board.handler.DeleteWatchListDatabaseHandler;
 import com.vertximplant.starter.vertx_big_board.handler.GetWatchListFromDatabaseHandler;
 import com.vertximplant.starter.vertx_big_board.handler.PutWatchListDatabaseHandler;
 import com.vertximplant.starter.vertx_big_board.handler.WatchListHandler;
@@ -22,6 +23,9 @@ public class WatchListRestAPI {
   @Inject
   private PutWatchListDatabaseHandler putWatchListDatabaseHandler;
 
+  @Inject
+  private DeleteWatchListDatabaseHandler deleteWatchListDatabaseHandler;
+
   public void attach(Router router, Pool db) {
     final String path = "/account/watchlist/:accountId";
     router.get(path).handler(watchListHandler);
@@ -32,6 +36,8 @@ public class WatchListRestAPI {
         .handler(routingContext -> getWatchListFromDatabaseHandler.handle(routingContext, db));
     router.put(pgPath)
         .handler(routingContext -> putWatchListDatabaseHandler.handle(routingContext, db));
+    router.delete(pgPath)
+        .handler(routingContext -> deleteWatchListDatabaseHandler.handle(routingContext, db));
   }
 
   public static String getAccountId(RoutingContext routingContext) {

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import static com.vertximplant.starter.vertx_big_board.helper.GSONHelper.gsonToString;
 
 public class PutWatchListDatabaseHandler {
@@ -39,13 +40,13 @@ public class PutWatchListDatabaseHandler {
 
     SqlTemplate
         .forUpdate(db,
-            "INSERT INTO broker.watchlist (account_id, asset) VALUES(#{account_id},#{asset})"+" ON CONFLICT (account_id,asset) DO NOTHING")
+            "INSERT INTO broker.watchlist (account_id, asset) VALUES(#{account_id},#{asset})"
+                + " ON CONFLICT (account_id,asset) DO NOTHING")
         .executeBatch(parameterBatch).onFailure(DBResponseHelper.errorHandler(routingContext,
             "Failed to insert watchlist for accountId: " + accountId))
         .onSuccess(result -> {
-           dbResponseHelper.handleEmptyResponse("t_test", routingContext, "WatchListId",
-           new Failure(HttpResponseStatus.NO_CONTENT.code(), ""), "Insert in WatchList",
-           stopwatch);
+          dbResponseHelper.handleEmptyResponse(UUID.randomUUID().toString(), routingContext,
+              "WatchListId" + accountId, "Insert into WatchList", stopwatch);
         });
   }
 }
