@@ -6,12 +6,12 @@
       <env name="DB_PORT" value="5432" />
       <env name="DB_DATABASE" value="vertx-big-board" />
       <env name="DB_USER" value="postgres" />
-      <env name="DB_PASSWORD" value="postgres" />
+      <env name="DB_PASSWORD" value="" />
       <env name="MySql_HOST" value="localhost" />
       <env name="MySql_PORT" value="3306" />
       <env name="MySql_DATABASE" value="vertx-big-board" />
       <env name="MySql_USER" value="root" />
-      <env name="MySql_PASSWORD" value="root@04G" />
+      <env name="MySql_PASSWORD" value="" />
     </envs>
     <option name="MAIN_CLASS_NAME" value="com.vertximplant.starter.vertx_big_board.verticles.MainVerticle" />
     <module name="vertx-big-board" />
