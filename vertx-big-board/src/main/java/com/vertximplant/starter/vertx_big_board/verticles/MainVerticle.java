@@ -34,7 +34,7 @@ public class MainVerticle extends AbstractVerticle {
 
   private Future<Void> migrateDatabase() {
     return ConfigLoader.loadBrokerConfig(vertx).compose(config -> {
-      return FlywayMigration.migrate(vertx, config.getDbConfig());
+      return FlywayMigration.migrate(vertx, config.getDbConfig(),config.getMySqlDbConfig());
     });
   }
 
