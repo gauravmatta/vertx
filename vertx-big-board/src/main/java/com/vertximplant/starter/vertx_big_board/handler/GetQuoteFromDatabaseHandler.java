@@ -11,6 +11,7 @@ import io.vertx.sqlclient.Pool;
 import io.vertx.sqlclient.templates.SqlTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Collections;
 
 public class GetQuoteFromDatabaseHandler {

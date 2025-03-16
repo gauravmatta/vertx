@@ -4,13 +4,12 @@ import com.google.common.base.Stopwatch;
 import com.google.inject.Inject;
 import com.vertximplant.starter.vertx_big_board.api.WatchListRestAPI;
 import com.vertximplant.starter.vertx_big_board.helper.DBResponseHelper;
-import com.vertximplant.starter.vertx_big_board.pojo.exception.Failure;
-import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.sqlclient.Pool;
 import io.vertx.sqlclient.templates.SqlTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.Collections;
 import java.util.UUID;
 

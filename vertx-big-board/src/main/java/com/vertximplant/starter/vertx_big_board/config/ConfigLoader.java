@@ -9,6 +9,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 public class ConfigLoader {
@@ -21,8 +22,14 @@ public class ConfigLoader {
   public static final String DB_DATABASE = "DB_DATABASE";
   public static final String DB_USER = "DB_USER";
   public static final String DB_PASSWORD = "DB_PASSWORD";
+  public static final String MySql_HOST = "MySql_HOST";
+  public static final String MySql_PORT = "MySql_PORT";
+  public static final String MySql_DATABASE = "MySql_DATABASE";
+  public static final String MySql_USER = "MySql_USER";
+  public static final String MySql_PASSWORD = "MySql_PASSWORD";
   static final List<String> EXPOSED_ENVIRONMENT_VARIABLES =
-      List.of(SERVER_PORT, DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD);
+      List.of(SERVER_PORT, DB_HOST, DB_PORT, DB_DATABASE, DB_USER, DB_PASSWORD,MySql_HOST, MySql_PORT, MySql_DATABASE, MySql_USER, MySql_PASSWORD);
+
 
   public static Future<BrokerConfig> loadBrokerConfig(Vertx vertx) {
 
