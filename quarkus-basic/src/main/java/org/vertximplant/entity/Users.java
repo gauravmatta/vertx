@@ -12,6 +12,4 @@ public class Users extends PanacheEntity {
 
     @Column(length = 64,unique = true)
     public String name;
-
-
 }

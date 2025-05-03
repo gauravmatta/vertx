@@ -1,4 +1,4 @@
-package org.vertximplant;
+package org.vertximplant.rersources;
 
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.panache.common.Sort;
