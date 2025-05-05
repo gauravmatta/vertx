@@ -5,7 +5,6 @@ import io.smallrye.mutiny.vertx.core.AbstractVerticle;
 import io.vertx.mutiny.core.Vertx;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
-import jakarta.enterprise.event.Startup;
 import jakarta.enterprise.inject.Instance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
