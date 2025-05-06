@@ -1,4 +1,9 @@
-CREATE SEQUENCE hibernate_sequence START 1;
-insert into users(id,name) values (nextval('hibernate_sequence'),'Gaurav');
-insert into users(id,name) values (nextval('hibernate_sequence'),'Raghavi');
-insert into users(id,name) values (nextval('hibernate_sequence'),'Ekta');
+--CREATE SEQUENCE hibernate_sequence START 1;
+--insert into users(id,name) values (nextval('hibernate_sequence'),'Gaurav');
+--insert into users(id,name) values (nextval('hibernate_sequence'),'Raghavi');
+--insert into users(id,name) values (nextval('hibernate_sequence'),'Ekta');
+----select setval('hibernate_sequence', nextval('hibernate_sequence') + 4);
+--BEGIN;
+--ALTER SEQUENCE hibernate_sequence INCREMENT BY 4;
+--SELECT nextval('hibernate_sequence');
+--COMMIT;
