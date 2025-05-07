@@ -1,4 +1,4 @@
-package org.vertximplant;
+package org.vertximplant.rersources;
 
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.panache.common.Sort;
@@ -9,7 +9,6 @@ import jakarta.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vertximplant.entity.Users;
-
 
 import java.net.URI;
 import java.util.List;
