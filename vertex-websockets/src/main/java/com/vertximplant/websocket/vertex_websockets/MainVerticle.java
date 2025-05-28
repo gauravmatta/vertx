@@ -2,6 +2,7 @@ package com.vertximplant.websocket.vertex_websockets;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.http.HttpServerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,9 @@ public class MainVerticle extends AbstractVerticle {
 
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
-    vertx.createHttpServer().webSocketHandler(new WebSocketHandler())
+    vertx.createHttpServer(new HttpServerOptions()
+        .setRegisterWebSocketWriteHandlers(true))
+      .webSocketHandler(new WebSocketHandler(vertx))
       .listen(8900).onComplete(http -> {
       if (http.succeeded()) {
         startPromise.complete();

@@ -12,6 +12,11 @@ public class WebSocketHandler implements Handler<ServerWebSocket> {
 
   private static final Logger LOG = LoggerFactory.getLogger(WebSocketHandler.class);
   private static final String PATH = "/ws/chatagent";
+  private final PriceBroadcast broadcast;
+
+  public WebSocketHandler(final Vertx vertx){
+    this.broadcast= new PriceBroadcast(vertx);
+  }
 
   @Override
   public void handle(final ServerWebSocket ws) {
@@ -25,9 +30,13 @@ public class WebSocketHandler implements Handler<ServerWebSocket> {
     LOG.info("Opening web socket connection:{}, {}",ws.path(),ws.textHandlerID());
     ws.accept();
     ws.frameHandler(frameHandler(ws));
-    ws.endHandler(onClose -> LOG.info("Closed {}",ws.textHandlerID()));
+    ws.endHandler(onClose -> {
+      LOG.info("Closed {}", ws.textHandlerID());
+      broadcast.unregister(ws);
+    });
     ws.exceptionHandler(err->LOG.error("Failed: ",err));
     ws.writeTextMessage("Connected!");
+    broadcast.register(ws);
   }
 
   private static Handler<WebSocketFrame> frameHandler(ServerWebSocket ws) {
