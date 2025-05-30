@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class WebSocketHandler implements Handler<ServerWebSocket> {
 
   private static final Logger LOG = LoggerFactory.getLogger(WebSocketHandler.class);
-  private static final String PATH = "/ws/chatagent";
+  static final String PATH = "/ws/chatagent";
   private final PriceBroadcast broadcast;
 
   public WebSocketHandler(final Vertx vertx){
